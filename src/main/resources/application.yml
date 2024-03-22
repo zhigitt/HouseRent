@@ -1,0 +1,23 @@
+spring:
+    application:
+        name: HouseRent
+
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/houserent
+        username: postgres
+        password: zhigit
+
+    jpa:
+        hibernate:
+            ddl-auto: create
+        show-sql: true
+
+
+server:
+    error:
+        include-stacktrace: always
+
+#app:
+#    jwt:
+#        secret:

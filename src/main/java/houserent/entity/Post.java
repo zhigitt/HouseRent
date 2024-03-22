@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,7 @@ public class Post {
     private String description;
     private String image;
     private HomeType hometype;
+    private BigDecimal price;
     private int persons;
     private boolean favorite;
 

@@ -1,4 +1,4 @@
-package houserent.entity.enums;
+package houserent.entity;
 
 import houserent.entity.Post;
 import houserent.entity.User;

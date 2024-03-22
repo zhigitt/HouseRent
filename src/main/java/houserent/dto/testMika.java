@@ -1,5 +1,5 @@
 package houserent.dto;
 
-public class Test {
+public class testMika {
 
 }

@@ -18,6 +18,6 @@ server:
     error:
         include-stacktrace: always
 
-#app:
-#    jwt:
-#        secret:
+app:
+    jwt:
+        secret: airbnb

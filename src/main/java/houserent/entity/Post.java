@@ -1,7 +1,6 @@
 package houserent.entity;
 
 import houserent.entity.enums.HomeType;
-import houserent.entity.enums.InFavorite;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,13 +1,17 @@
 package houserent.serivce.impl;
 
 import houserent.config.jwt.JwtService;
+import houserent.dto.request.SignInRequest;
 import houserent.dto.request.SignUpRequest;
+import houserent.dto.response.LoginResponse;
 import houserent.dto.response.SimpleResponse;
 import houserent.entity.User;
+import houserent.exception.NotFoundException;
 import houserent.repository.UserRepo;
 import houserent.serivce.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static org.hibernate.query.sqm.tree.SqmNode.log;
@@ -17,10 +21,13 @@ import static org.hibernate.query.sqm.tree.SqmNode.log;
 public class UserImpl implements UserService {
     private final UserRepo userRepo;
     private final JwtService jwtService;
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
     public SimpleResponse register(SignUpRequest signUpRequest) {
+        boolean exists = userRepo.existsByEmail(signUpRequest.getEmail());
+        if (exists) throw new RuntimeException("Email : " + signUpRequest.getEmail() + " already exist");
 
         User user = new User();
 
@@ -29,12 +36,36 @@ public class UserImpl implements UserService {
         user.setPassword(signUpRequest.getPassword());
         user.setPhoneNumber(signUpRequest.getPhoneNumber());
 
+
+        userRepo.save(user);
+
         String newToken = jwtService.createToken(user);
         log.info( user.getName() + " successfully saved!");
         return SimpleResponse
                 .builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Saved")
+                .build();
+    }
+
+    @Override
+    public LoginResponse login(SignInRequest signInRequest) {
+        User user = userRepo.findByEmail(signInRequest.getEmail()).orElseThrow(() ->
+                new NotFoundException("User with email: " + signInRequest.getEmail() + " not found!"));
+
+        String encodePassword = user.getPassword();
+        String password =signInRequest.getPassword();
+
+        boolean matches = passwordEncoder.matches(password, encodePassword);
+
+        if (!matches) throw new RuntimeException("Invalid password");
+
+        String token = jwtService.createToken(user);
+        return LoginResponse.builder()
+                .token(token)
+                .id(user.getId())
+                .email(user.getEmail())
+                .role(user.getRole())
                 .build();
     }
 }

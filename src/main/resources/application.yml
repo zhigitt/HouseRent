@@ -20,4 +20,4 @@ server:
 
 app:
     jwt:
-        secret: airbnb
+        secret: air

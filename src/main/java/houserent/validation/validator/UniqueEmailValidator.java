@@ -5,7 +5,9 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmailValidator, String> {
+import java.lang.annotation.Annotation;
+
+public class UniqueEmailValidator implements ConstraintValidator<UniqueEmailValidator, String>, Annotation {
 
     @Autowired
     private UserRepo userRepo;
@@ -22,4 +24,10 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmailVali
     public void initialize(UniqueEmailValidator constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
+
+    @Override
+    public Class<? extends Annotation> annotationType() {
+        return null;
+    }
 }
+

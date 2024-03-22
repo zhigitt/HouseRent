@@ -1,5 +1,5 @@
 package houserent.config;
 
-public class Test
+public class Test{
 
 }

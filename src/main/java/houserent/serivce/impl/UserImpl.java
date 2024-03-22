@@ -33,8 +33,9 @@ public class UserImpl implements UserService {
 
         user.setName(signUpRequest.getName());
         user.setEmail(signUpRequest.getEmail());
-        user.setPassword(signUpRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         user.setPhoneNumber(signUpRequest.getPhoneNumber());
+        user.setRole(signUpRequest.getRole());
 
 
         userRepo.save(user);

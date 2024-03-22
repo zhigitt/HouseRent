@@ -2,8 +2,7 @@ package houserent.entity;
 
 import houserent.entity.enums.HomeType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,6 +11,9 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "posts")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_seq")

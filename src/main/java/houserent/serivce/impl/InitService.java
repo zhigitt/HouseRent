@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class InitService {
     private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
 
     @PostConstruct @Transactional
     void saveAdmin(){
         User admin = new User(
                 "Admin",
                 "admin@gmail.com",
-                "1234",
+                passwordEncoder.encode( "1234"),
                 "+996701548565",
                 Role.ADMIN
         );

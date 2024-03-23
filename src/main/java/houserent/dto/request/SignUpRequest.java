@@ -1,10 +1,7 @@
 package houserent.dto.request;
 
 import houserent.entity.enums.Role;
-import houserent.validation.EmailValidation;
-import houserent.validation.PasswordValidation;
-import houserent.validation.PhoneNumberValidation;
-import houserent.validation.UniqueEmailValidation;
+import houserent.validation.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +16,7 @@ public class SignUpRequest {
     @PasswordValidation
     private String password;
 
+    @CardValidation
     private String card;
 
     @PhoneNumberValidation

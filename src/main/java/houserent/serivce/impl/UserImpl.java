@@ -6,11 +6,14 @@ import houserent.dto.request.SignUpRequest;
 import houserent.dto.response.LoginResponse;
 import houserent.dto.response.SimpleResponse;
 import houserent.entity.User;
+import houserent.entity.enums.Role;
+import houserent.exception.ForbiddenException;
 import houserent.exception.NotFoundException;
 import houserent.repository.UserRepo;
 import houserent.serivce.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -68,5 +71,17 @@ public class UserImpl implements UserService {
                 .email(user.getEmail())
                 .role(user.getRole())
                 .build();
+    }
+
+
+
+
+
+    private User getCurrentUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User current = userRepo.getByEmail(email);
+        if (current.getRole().equals(Role.VENDOR) || current.getRole().equals(Role.CLIENT))
+            return current;
+        else throw new ForbiddenException("Forbidden 403");
     }
 }

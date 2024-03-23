@@ -1,5 +1,7 @@
 package houserent.repository;
 
+import houserent.dto.SimpleResponse;
+import houserent.dto.request.SignUpRequest;
 import houserent.entity.User;
 import houserent.exception.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,4 +25,5 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     boolean existsByEmail(String email);
 
+    SimpleResponse replenish(SignUpRequest signUpRequest);
 }

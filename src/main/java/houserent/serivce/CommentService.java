@@ -1,10 +1,9 @@
 package houserent.serivce;
 
-import houserent.dto.CommentRequest;
-import houserent.dto.CommentResponse;
+import houserent.dto.request.CommentRequest;
+import houserent.dto.response.CommentResponse;
 import houserent.dto.SimpleResponse;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface CommentService {

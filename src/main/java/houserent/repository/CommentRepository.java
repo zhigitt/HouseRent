@@ -1,6 +1,6 @@
 package houserent.repository;
 
-import houserent.dto.CommentResponse;
+import houserent.dto.response.CommentResponse;
 import houserent.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

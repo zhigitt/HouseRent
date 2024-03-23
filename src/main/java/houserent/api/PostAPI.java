@@ -1,7 +1,7 @@
 package houserent.api;
 
 import houserent.dto.request.PostRequest;
-import houserent.dto.response.PostResponseAll;
+import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.PostResponseOne;
 import houserent.dto.response.SimpleResponse;
 import houserent.serivce.PostService;
@@ -34,7 +34,7 @@ public class PostAPI {
     }
 
     @GetMapping("/all")
-    public List<PostResponseAll> all (){
+    public List<PostResponseAlls> all (){
         return postService.allPost();
     }
     @GetMapping("/find/{postId}")

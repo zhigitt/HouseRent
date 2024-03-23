@@ -1,7 +1,7 @@
 package houserent.serivce;
 
 import houserent.dto.request.PostRequest;
-import houserent.dto.response.PostResponseAll;
+import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.PostResponseOne;
 import houserent.dto.response.SimpleResponse;
 
@@ -14,7 +14,7 @@ public interface PostService {
 
     SimpleResponse delete(Long postId);
 
-    List<PostResponseAll> allPost();
+    List<PostResponseAlls> allPost();
 
     PostResponseOne findPost(Long postId);
 }

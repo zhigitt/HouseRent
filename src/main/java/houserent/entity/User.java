@@ -24,6 +24,7 @@ public class User implements UserDetails {
     private Long id;
     private String name;
     private String email;
+    private int card;
     private String password;
     private String phoneNumber;
 
@@ -42,14 +43,14 @@ public class User implements UserDetails {
     @OneToOne
     private RentInfo rentInfo;
 
-    public User(String name, String email, String password, String phoneNumber, Role role) {
+    public User(String name, String email, int card, String password, String phoneNumber, Role role) {
         this.name = name;
         this.email = email;
+        this.card = card;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.role = role;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

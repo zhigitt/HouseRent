@@ -1,4 +1,4 @@
-package houserent.security;
+package houserent.config.security;
 import houserent.config.jwt.JwtFilter;
 import houserent.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request -> {
             request
-                    .requestMatchers("/api/auth/**")
+                    .requestMatchers("/api/user/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated();

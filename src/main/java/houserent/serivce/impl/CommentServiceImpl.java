@@ -1,7 +1,7 @@
 package houserent.serivce.impl;
 
-import houserent.dto.CommentRequest;
-import houserent.dto.CommentResponse;
+import houserent.dto.request.CommentRequest;
+import houserent.dto.response.CommentResponse;
 import houserent.dto.SimpleResponse;
 import houserent.entity.Comment;
 import houserent.entity.Post;
@@ -17,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -26,7 +26,7 @@ public class UserImpl implements UserService {
     @Override
     public SimpleResponse register(SignUpRequest signUpRequest) {
         boolean exists = userRepo.existsByEmail(signUpRequest.getEmail());
-        if (exists) throw new RuntimeException("Email : " + signUpRequest.getEmail() + " already exist");
+        if (exists) throw new NotFoundException("Email : " + signUpRequest.getEmail() + " already exist");
 
         User user = new User();
 

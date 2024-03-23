@@ -1,6 +1,7 @@
 package houserent.api;
 
 import houserent.dto.SimpleResponse;
+import houserent.dto.request.ReplenishRequest;
 import houserent.dto.request.SignUpRequest;
 import houserent.repository.UserRepo;
 import houserent.serivce.UserService;
@@ -20,8 +21,8 @@ public class UserAPI {
 
     @Secured("CLIENT")
     @PostMapping("/replenish")
-    SimpleResponse replenish(@RequestBody SignUpRequest signUpRequest){
-        return null;
+    SimpleResponse replenish(@RequestBody ReplenishRequest replenishRequest){
+        return userService.replenish(replenishRequest);
     }
 
 

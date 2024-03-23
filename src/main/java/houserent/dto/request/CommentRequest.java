@@ -1,4 +1,4 @@
-package houserent.dto;
+package houserent.dto.request;
 
 import lombok.*;
 

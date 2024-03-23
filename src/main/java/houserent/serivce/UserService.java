@@ -9,4 +9,5 @@ public interface UserService {
     SimpleResponse register(SignUpRequest signUpRequest);
 
     LoginResponse login(SignInRequest signInRequest);
+
 }

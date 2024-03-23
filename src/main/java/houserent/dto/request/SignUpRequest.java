@@ -19,6 +19,8 @@ public class SignUpRequest {
     @PasswordValidation
     private String password;
 
+    private String card;
+
     @PhoneNumberValidation
     private String phoneNumber;
     private Role role;

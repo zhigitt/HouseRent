@@ -21,7 +21,7 @@ import static org.hibernate.query.sqm.tree.SqmNode.log;
 public class UserImpl implements UserService {
     private final UserRepo userRepo;
     private final JwtService jwtService;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override

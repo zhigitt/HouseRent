@@ -2,7 +2,6 @@ package houserent.dto.request;
 
 import houserent.entity.Address;
 import houserent.entity.enums.HomeType;
-import jakarta.persistence.ElementCollection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

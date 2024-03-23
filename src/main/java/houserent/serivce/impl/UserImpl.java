@@ -23,7 +23,6 @@ public class UserImpl implements UserService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
-
     @Override
     public SimpleResponse register(SignUpRequest signUpRequest) {
         boolean exists = userRepo.existsByEmail(signUpRequest.getEmail());
@@ -34,6 +33,7 @@ public class UserImpl implements UserService {
         user.setName(signUpRequest.getName());
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setCard(signUpRequest.getCard());
         user.setPhoneNumber(signUpRequest.getPhoneNumber());
         user.setRole(signUpRequest.getRole());
 

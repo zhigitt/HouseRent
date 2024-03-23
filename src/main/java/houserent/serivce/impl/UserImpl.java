@@ -1,17 +1,19 @@
 package houserent.serivce.impl;
 
 import houserent.config.jwt.JwtService;
+import houserent.dto.SimpleResponse;
 import houserent.dto.request.ReplenishRequest;
 import houserent.dto.request.SignInRequest;
 import houserent.dto.request.SignUpRequest;
 import houserent.dto.response.LoginResponse;
-import houserent.dto.response.SimpleResponse;
+import houserent.dto.response.SignUpResponse;
 import houserent.entity.User;
 import houserent.entity.enums.Role;
 import houserent.exception.ForbiddenException;
 import houserent.exception.NotFoundException;
 import houserent.repository.UserRepo;
 import houserent.serivce.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +30,7 @@ public class UserImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public SimpleResponse register(SignUpRequest signUpRequest) {
+    public SignUpResponse register(SignUpRequest signUpRequest) {
         boolean exists = userRepo.existsByEmail(signUpRequest.getEmail());
         if (exists) throw new NotFoundException("Email : " + signUpRequest.getEmail() + " already exist");
 
@@ -46,8 +48,9 @@ public class UserImpl implements UserService {
 
         String newToken = jwtService.createToken(user);
         log.info( user.getName() + " successfully saved!");
-        return SimpleResponse
+        return SignUpResponse
                 .builder()
+                .token(newToken)
                 .httpStatus(HttpStatus.OK)
                 .message("Saved")
                 .build();
@@ -75,14 +78,20 @@ public class UserImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public houserent.dto.SimpleResponse replenish(ReplenishRequest replenishRequest) {
         User user =getCurrentUser();
 
         int card = getCurrentUser().getCard();
         card += replenishRequest.getCard();
 
+        getCurrentUser().setCard(card);
 
-        return null;
+        return SimpleResponse
+                .builder()
+                .httpStatus(HttpStatus.OK)
+                .message(" + " + replenishRequest.getCard())
+                .build();
     }
 
 

@@ -20,6 +20,7 @@ public class InitService {
         User admin = new User(
                 "Admin",
                 "admin@gmail.com",
+                0,
                 passwordEncoder.encode( "1234"),
                 "+996701548565",
                 Role.ADMIN

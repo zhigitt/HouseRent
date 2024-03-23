@@ -8,7 +8,6 @@ import lombok.Setter;
 
 @Setter @Getter
 public class SignInRequest {
-    @UniqueEmailValidation
     @EmailValidation
     private String email;
 

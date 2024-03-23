@@ -1,7 +1,7 @@
 package houserent.serivce.impl;
 
 import houserent.dto.request.PostRequest;
-import houserent.dto.response.PostResponseAll;
+import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.PostResponseOne;
 import houserent.dto.response.SimpleResponse;
 import houserent.entity.Address;
@@ -9,6 +9,7 @@ import houserent.entity.Post;
 import houserent.entity.User;
 import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Role;
+import houserent.repository.AddressRepository;
 import houserent.repository.PostRepository;
 import houserent.repository.UserRepo;
 import houserent.serivce.PostService;
@@ -28,34 +29,35 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserRepo userRepo;
+    private final AddressRepository addressRepository;
 
     @Override
     public SimpleResponse save(PostRequest postRequest) {
 
-
-
         User currentUser = getCurrentUser();
+
+        Address address = new Address();
+        address.setCity(postRequest.getCity());
+        address.setRegion(postRequest.getRegion());
+        address.setStreet(postRequest.getStreet());
+
+        Address savedAddress = addressRepository.save(address);
 
         Post post = new Post();
         post.setTitle(postRequest.getTitle());
-        post.setImage(postRequest.getImage());
         post.setDescription(postRequest.getDescription());
+        post.setImage(postRequest.getImage());
         post.setHometype(postRequest.getHometype());
-        post.setPersons(postRequest.getPersons());
         post.setPrice(postRequest.getPrice());
+        post.setPersons(postRequest.getPersons());
 
-        Address address = new Address();
-
-        address.setCity(postRequest.getAddress().getCity());
-        address.setRegion(postRequest.getAddress().getRegion());
-        address.setStreet(postRequest.getAddress().getStreet());
-
+        post.setAddress(savedAddress);
         post.setUsers(currentUser);
-        post.setAddress(address);
         postRepository.save(post);
+
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message(" Удачно сохранился !")
+                .message("Пост успешно сохранен!")
                 .build();
     }
 
@@ -85,7 +87,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostResponseAll> allPost() {
+    public List<PostResponseAlls> allPost() {
         return postRepository.getAll();
     }
 

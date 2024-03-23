@@ -21,8 +21,7 @@ public class Post {
     private Long id;
     private String title;
     private String description;
-    @ElementCollection
-    private List<String> image;
+    private String image;
     private HomeType hometype;
     private BigDecimal price;
     private int persons;

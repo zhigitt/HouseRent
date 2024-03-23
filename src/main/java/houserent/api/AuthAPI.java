@@ -1,9 +1,10 @@
 package houserent.api;
 
+import houserent.dto.SimpleResponse;
 import houserent.dto.request.SignInRequest;
 import houserent.dto.request.SignUpRequest;
 import houserent.dto.response.LoginResponse;
-import houserent.dto.response.SimpleResponse;
+import houserent.dto.response.SignUpResponse;
 import houserent.serivce.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class AuthAPI {
     private final UserService userService;
 
     @PostMapping("/signUp")
-    SimpleResponse signUp(@RequestBody @Valid SignUpRequest signUpRequest){
+    SignUpResponse signUp(@RequestBody @Valid SignUpRequest signUpRequest){
         return userService.register(signUpRequest);
     }
 

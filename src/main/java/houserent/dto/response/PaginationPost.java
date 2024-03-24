@@ -1,20 +1,17 @@
 package houserent.dto.response;
 
-import houserent.entity.Address;
 import houserent.entity.enums.Region;
-import jakarta.persistence.ElementCollection;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-public class PostResponseAlls
-{
+public class PaginationPost{
+    private int page;
+    private int size;
     private String title;
     private String image;
     private BigDecimal price;

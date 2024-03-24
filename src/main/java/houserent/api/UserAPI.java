@@ -1,6 +1,6 @@
 package houserent.api;
 
-import houserent.dto.SimpleResponse;
+import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.ReplenishRequest;
 import houserent.serivce.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +20,12 @@ public class UserAPI {
         return userService.replenish(replenishRequest);
     }
 
-    @Secured("CLIENT")
-    @PutMapping("/addFavorite")
-    SimpleResponse addPost(@PathVariable Long postId ){
-        return userService.addFavoritePost(postId);
-    }
-
+//    @Secured("CLIENT")
+//    @PutMapping("/addFavorite")
+//    SimpleResponse addPost(@PathVariable Long postId ){
+//        return userService.addFavoritePost(postId);
+//    }
+//
 
 
 }

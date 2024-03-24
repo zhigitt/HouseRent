@@ -1,7 +1,7 @@
 package houserent.serivce.impl;
 
 import houserent.config.jwt.JwtService;
-import houserent.dto.SimpleResponse;
+import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.ReplenishRequest;
 import houserent.dto.request.SignInRequest;
 import houserent.dto.request.SignUpRequest;
@@ -79,7 +79,7 @@ public class UserImpl implements UserService {
 
     @Override
     @Transactional
-    public houserent.dto.SimpleResponse replenish(ReplenishRequest replenishRequest) {
+    public SimpleResponse replenish(ReplenishRequest replenishRequest) {
         User user =getCurrentUser();
 
         int card = getCurrentUser().getCard();

@@ -2,7 +2,7 @@ package houserent.serivce;
 
 import houserent.dto.request.CommentRequest;
 import houserent.dto.response.CommentResponse;
-import houserent.dto.SimpleResponse;
+import houserent.dto.response.SimpleResponse;
 
 import java.util.List;
 

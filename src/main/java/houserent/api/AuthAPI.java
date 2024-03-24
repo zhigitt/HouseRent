@@ -1,6 +1,5 @@
 package houserent.api;
 
-import houserent.dto.SimpleResponse;
 import houserent.dto.request.SignInRequest;
 import houserent.dto.request.SignUpRequest;
 import houserent.dto.response.LoginResponse;

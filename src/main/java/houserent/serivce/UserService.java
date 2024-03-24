@@ -1,6 +1,6 @@
 package houserent.serivce;
 
-import houserent.dto.SimpleResponse;
+import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.ReplenishRequest;
 import houserent.dto.request.SignInRequest;
 import houserent.dto.request.SignUpRequest;
@@ -12,5 +12,5 @@ public interface UserService {
 
     LoginResponse login(SignInRequest signInRequest);
 
-    houserent.dto.SimpleResponse replenish(ReplenishRequest replenishRequest);
+    SimpleResponse replenish(ReplenishRequest replenishRequest);
 }

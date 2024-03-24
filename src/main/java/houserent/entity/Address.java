@@ -16,6 +16,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
     @SequenceGenerator(name = "address_seq", allocationSize = 1)
     private Long id;
+    @Enumerated(EnumType.STRING)
     private Region region;
     private String city;
     private String street;

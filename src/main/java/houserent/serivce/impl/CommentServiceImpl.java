@@ -2,7 +2,7 @@ package houserent.serivce.impl;
 
 import houserent.dto.request.CommentRequest;
 import houserent.dto.response.CommentResponse;
-import houserent.dto.SimpleResponse;
+import houserent.dto.response.SimpleResponse;
 import houserent.entity.Comment;
 import houserent.entity.Post;
 import houserent.entity.User;

@@ -4,6 +4,7 @@ import houserent.dto.request.CommentRequest;
 import houserent.dto.response.CommentResponse;
 import houserent.dto.response.SimpleResponse;
 import houserent.entity.Comment;
+import houserent.entity.Like;
 import houserent.entity.Post;
 import houserent.entity.User;
 import houserent.exception.NotFoundException;
@@ -11,6 +12,7 @@ import houserent.repository.CommentRepository;
 import houserent.repository.PostRepository;
 import houserent.repository.UserRepo;
 import houserent.serivce.CommentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
-    @Override
+    @Override @Transactional
     public SimpleResponse save(Long postId, CommentRequest commentRequest) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepo.getByEmail(email);
@@ -42,6 +44,10 @@ public class CommentServiceImpl implements CommentService {
         comment.setPost(post);
         calculateAverageMark(postId);
         commentRepository.save(comment);
+
+        Like like = new Like();
+        like.setComment(comment);
+        comment.setLike(like);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Successfully saved! ")

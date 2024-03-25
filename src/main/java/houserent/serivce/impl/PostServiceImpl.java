@@ -178,7 +178,7 @@ public class PostServiceImpl implements PostService {
 
         List<CommentResponse> commentResponses = new ArrayList<>();
         for (Comment comment : post.getComments()) {
-            commentResponses.add(new CommentResponse(comment.getUser().getName(),comment.getId(), comment.getComment(),comment.getDate(),comment.getImage(),comment.getMark()));
+            commentResponses.add(new CommentResponse(comment.getUser().getName(),comment.getId(), comment.getComment(),comment.getDate(),comment.getImages(),comment.getMark()));
         }
         favoritePost.setInFavorites(inFavoriteResponses);
         favoritePost.setComments(commentResponses);

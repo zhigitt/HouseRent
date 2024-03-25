@@ -50,7 +50,7 @@ public class UserImpl implements UserService {
         user.setName(signUpRequest.getName());
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-//        user.setCard(signUpRequest.getCard());
+        user.setCard(signUpRequest.getCard());
         user.setPhoneNumber(signUpRequest.getPhoneNumber());
         user.setRole(signUpRequest.getRole());
 
@@ -92,11 +92,12 @@ public class UserImpl implements UserService {
     @Transactional
     public houserent.dto.response.SimpleResponse replenish(ReplenishRequest replenishRequest) {
         User user =getCurrentUser();
-//
-//        int card = getCurrentUser().getCard();
-//        card += replenishRequest.getCard();
-//
-//        getCurrentUser().setCard(card);
+
+        BigDecimal card = getCurrentUser().getCard();
+        card = card.add(replenishRequest.getCard());
+
+        getCurrentUser().setCard(card);
+
 
         return SimpleResponse
                 .builder()
@@ -164,38 +165,51 @@ public class UserImpl implements UserService {
 
         int daysBooking = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
 
-
-
         if (post.isBook() == false){
             BigDecimal currentUserCard = currentUser.getCard();
             BigDecimal postPrice = post.getPrice();
 
             if (currentUserCard.compareTo(postPrice) >= 0){
-                currentUserCard = currentUserCard.subtract(postPrice);
-                vendor.getCard().add(currentUserCard);
+                BigDecimal total = postPrice.multiply(BigDecimal.valueOf(daysBooking));
+
+                currentUserCard = currentUserCard.subtract(total);
+
+                vendor.setCard(total);
+                post.setBook(true);
 
                 rentInfo.setUser(currentUser);
                 rentInfo.setPost(post);
                 rentInfo.setChekin(rentInfoRequest.getChekin());
                 rentInfo.setChekOut(rentInfoRequest.getChekOut());
 
-
-
                 rentInfoRepo.save(rentInfoRepo);
+
+                return SimpleResponse
+                        .builder()
+                        .httpStatus(HttpStatus.OK)
+                        .message("Brondoldu: " + post.getTitle()+
+                                 "Price: " + postPrice +
+                                 "Chek in: " + checkIn +
+                                "Chek out: " + checkOut +
+                                 "Kundor: " + daysBooking+
+                                 "Summa: $" +total)
+                        .build();
+            }else {
+                return SimpleResponse
+                        .builder()
+                        .httpStatus(HttpStatus.OK)
+                        .message("Catatochkada akcha jetishsiz!")
+                        .build();
             }
 
+        }else {
             return SimpleResponse
                     .builder()
                     .httpStatus(HttpStatus.OK)
-                    .message(post.getTitle() + " brondoldu!")
+                    .message(post.getTitle() + " bosh emes brondolgon!")
                     .build();
+
         }
-
-
-
-
-
-        return null;
     }
 
     private User getCurrentUser() {

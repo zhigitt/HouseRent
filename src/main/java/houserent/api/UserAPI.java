@@ -38,7 +38,7 @@ public class UserAPI {
     }
 
     @Secured("CLIENT")
-    @GetMapping("/toBook")
+    @PostMapping("/toBook/{postId}")
     SimpleResponse toBook(@PathVariable Long postId,
                           @RequestBody RentInfoRequest rentInfoRequest){
         return userService.toBook(postId, rentInfoRequest);

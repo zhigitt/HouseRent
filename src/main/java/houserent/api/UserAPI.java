@@ -1,7 +1,6 @@
 package houserent.api;
 
 import houserent.dto.response.FavoritePostsResponse;
-import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.ReplenishRequest;
 import houserent.serivce.UserService;

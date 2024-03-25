@@ -21,7 +21,7 @@ public class Comment {
     private String comment;
     private ZonedDateTime date;
     private String image;
-    private int mark;
+    private double mark;
 
     @ManyToOne
     private Post post;

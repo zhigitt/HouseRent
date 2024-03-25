@@ -1,6 +1,5 @@
 package houserent.serivce;
 
-import houserent.dto.SimpleResponse;
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.*;
 import houserent.entity.enums.HomeType;

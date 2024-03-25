@@ -11,6 +11,7 @@ import houserent.repository.CommentRepository;
 import houserent.repository.PostRepository;
 import houserent.repository.UserRepo;
 import houserent.serivce.CommentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,7 +26,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
-    @Override
+    @Override @Transactional
     public SimpleResponse save(Long postId,CommentRequest commentRequest) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepo.getByEmail(email);
@@ -37,12 +38,41 @@ public class CommentServiceImpl implements CommentService {
         comment.setMark(commentRequest.getMark());
         comment.setUser(user);
         comment.setPost(post);
-        calculateAverageMark(postId);
         commentRepository.save(comment);
+
+        double rating = announcementRating(post.getComments());
+        double roundedRating = Math.round(rating * 10.0) / 10.0;
+        double limitedRating = Math.min(roundedRating, 5.0);
+        post.setMark(limitedRating);
+
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Successfully saved! ")
                 .build();
+    }
+
+    private double announcementRating(List<Comment> feedbacks) {
+        if (feedbacks.isEmpty()) {
+            return 0;
+        }
+
+        double sumRatings = 0;
+        for (Comment feedback : feedbacks) {
+            sumRatings += feedback.getMark();
+        }
+
+        double averageRating = sumRatings / feedbacks.size();
+
+        return averageRating * (5.0 / getMaxRating(feedbacks));
+    }
+    private double getMaxRating(List<Comment> feedbacks) {
+        double maxRating = Double.MIN_VALUE;
+        for (Comment feedback : feedbacks) {
+            if (feedback.getMark() > maxRating) {
+                maxRating = feedback.getMark();
+            }
+        }
+        return maxRating;
     }
 
     @Override
@@ -53,7 +83,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponse> findByUserId(Long id) {
-//        User user = userRepo.findById(id).orElseThrow(() -> new NotFoundException("With this id not found! "));
         return commentRepository.findCommentsByUserId(id);
     }
 
@@ -97,20 +126,6 @@ public class CommentServiceImpl implements CommentService {
                 .build();
     }
 
-    public double calculateAverageMark(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundException("Post not found with id: " + postId));
-        List<Comment> comments = commentRepository.findByPost(post);
-
-        if (comments.isEmpty()) {
-            return 0; // или любое другое значение по умолчанию
-        }
-
-        int totalMark = comments.stream().mapToInt(Comment::getMark).sum();
-        double averageMark = (double) totalMark / comments.size();
-
-        // Ограничение средней оценки до 5
-        return Math.min(5, averageMark);
-    }
 
 
 }

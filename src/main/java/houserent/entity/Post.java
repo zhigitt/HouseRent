@@ -21,8 +21,8 @@ public class Post {
     private Long id;
     private String title;
     private String description;
-    @ElementCollection
     private String image;
+    private double mark;
     @Enumerated(EnumType.STRING)
     private HomeType hometype;
     private BigDecimal price;

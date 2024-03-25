@@ -1,5 +1,6 @@
 package houserent.api;
 
+import houserent.dto.request.RentInfoRequest;
 import houserent.dto.response.FavoritePostsResponse;
 import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.SimpleResponse;
@@ -35,11 +36,12 @@ public class UserAPI {
     List<FavoritePostsResponse> getAll(){
         return userService.getAllFavoritePosts();
     }
-//    @Secured("CLIENT")
-//    @PutMapping("/addFavorite")
-//    SimpleResponse addPost(@PathVariable Long postId ){
-//        return userService.addFavoritePost(postId);
-//    }
-//
+
+    @Secured("CLIENT")
+    @PostMapping("/toBook/{postId}")
+    SimpleResponse toBook(@PathVariable Long postId,
+                          @RequestBody RentInfoRequest rentInfoRequest){
+        return userService.toBook(postId, rentInfoRequest);
+    }
 
 }

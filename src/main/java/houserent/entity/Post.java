@@ -21,7 +21,6 @@ public class Post {
     private Long id;
     private String title;
     private String description;
-    @ElementCollection
     private String image;
     @Enumerated(EnumType.STRING)
     private HomeType hometype;

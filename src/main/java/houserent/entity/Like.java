@@ -25,6 +25,6 @@ public class Like {
     @OneToOne
     private Comment comment;
 
-    @OneToOne
-    private User user;
+//    @OneToOne
+//    private User user;
 }

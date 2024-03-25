@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -13,8 +16,10 @@ public class Like {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "like_seq")
     @SequenceGenerator(name = "like_seq", allocationSize = 1)
     private Long id;
-    private boolean isLike;
-    private boolean disLike;
+    @ElementCollection
+    private List<Long> isLike = new ArrayList<>();
+    @ElementCollection
+    private List<Long> disLike = new ArrayList<>();
 
     @OneToOne
     private Comment comment;

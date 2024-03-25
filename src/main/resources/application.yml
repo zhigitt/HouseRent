@@ -6,11 +6,11 @@ spring:
         driver-class-name: org.postgresql.Driver
         url: jdbc:postgresql://localhost:5432/houserent
         username: postgres
-        password: zhigit
+        password: 2020
 
     jpa:
         hibernate:
-            ddl-auto: create
+            ddl-auto: update
         show-sql: true
 
 

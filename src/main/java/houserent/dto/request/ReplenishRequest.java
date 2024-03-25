@@ -4,9 +4,11 @@ import houserent.validation.CardValidation;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public class ReplenishRequest {
     @CardValidation
-    private int card;
+    private BigDecimal card;
 }

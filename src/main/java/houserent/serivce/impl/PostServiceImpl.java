@@ -1,13 +1,11 @@
 package houserent.serivce.impl;
 
-import houserent.dto.SimpleResponse;
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.PaginationPost;
 import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.PostResponseOne;
 import houserent.dto.response.*;
 import houserent.entity.Address;
-import houserent.entity.Comment;
 import houserent.entity.Post;
 import houserent.entity.User;
 import houserent.entity.enums.HomeType;

@@ -1,10 +1,7 @@
 package houserent.api;
 
 import houserent.dto.request.PostRequest;
-import houserent.dto.response.PaginationPost;
-import houserent.dto.response.PostResponseAlls;
-import houserent.dto.response.PostResponseOne;
-import houserent.dto.response.SimpleResponse;
+import houserent.dto.response.*;
 import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Region;
 import houserent.serivce.PostService;
@@ -20,7 +17,6 @@ public class PostAPI {
 
     private final PostService postService;
 
-//    ???????
     @PostMapping("/save")
     public SimpleResponse savePost(@RequestBody PostRequest postRequest){
         return postService.save(postRequest);
@@ -63,6 +59,22 @@ public class PostAPI {
     public List<PostResponseAlls> filterPrice(@RequestParam String word){
         return postService.priceFilter(word);
     }
+
+    @GetMapping("/vendor")
+    public List<PostVendorAll> vendorProfile(){
+        return postService.vendorAll();
+    }
+
+    @GetMapping("/announcement")
+    public List<PostAnnouncementAll> vendorAnnouncement(){
+        return postService.announcementAll();
+    }
+
+//    @GetMapping("/favorite")
+//    public FavoritePost favoritePost (){
+//        return postService.favoritePost();
+//    }
+
 
 
 }

@@ -1,7 +1,9 @@
 package houserent.repository;
 
+import houserent.dto.response.PostAnnouncementAll;
 import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.PostResponseOne;
+import houserent.dto.response.PostVendorAll;
 import houserent.entity.Address;
 import houserent.entity.Post;
 import houserent.entity.enums.HomeType;
@@ -13,6 +15,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -46,6 +50,25 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     List<PostResponseAlls> priceFilter(String word);
 @Query("select p from Post p")
     Page<Post> getAllPage(Pageable pageable);
+
+
+//    private String name;
+//    private String email;
+//    private String title;
+//    private String image;
+//    private BigDecimal price;
+//    private String description;
+//    private Integer persons;
+//    private Integer mark;
+//    private String city;
+//    private Region region;
+//    private String street;
+//    private LocalDate chekin;
+//    private LocalDate chekOut;
+    @Query("select new houserent.dto.response.PostVendorAll(u.name,u.email,p.title, p.image,p.price, p.description, p.persons, c.mark, a.city, a.region, a.street,r.chekin,r.chekOut) from Post p join p.address a left join p.comments c join p.users u join u.rentInfos r")
+    List<PostVendorAll> vendorAllPost();
+    @Query("select new houserent.dto.response.PostAnnouncementAll(u.name,u.email,p.title, p.image,p.price, p.description, p.persons, c.mark, a.city, a.region, a.street) from Post p join p.address a left join p.comments c join p.users u")
+    List<PostAnnouncementAll> announcement();
 
 
 //    @Query("SELECT new java12.dto.response.MenuSearchResponse(s, m.name, m.price, m.description, m.isVegetarian) FROM MenuItem m JOIN m.subcategories s ORDER BY CASE WHEN :word = 'asc' THEN m.price END ASC, CASE WHEN :word = 'desc' THEN m.price END DESC")

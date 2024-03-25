@@ -4,7 +4,11 @@ import houserent.dto.request.PostRequest;
 import houserent.dto.response.PaginationPost;
 import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.PostResponseOne;
+<<<<<<< HEAD
 import houserent.dto.response.SimpleResponse;
+=======
+import houserent.dto.response.*;
+>>>>>>> 65a8f71e275b2ad071e627ab0e454ad75d2b54d2
 import houserent.entity.Address;
 import houserent.entity.Post;
 import houserent.entity.User;
@@ -148,10 +152,22 @@ public class PostServiceImpl implements PostService {
         return postRepository.priceFilter(word);
     }
 
+    @Override
+    public List<PostVendorAll> vendorAll() {
+        getCurrentUser();
+        return postRepository.vendorAllPost();
+    }
+
+    @Override
+    public List<PostAnnouncementAll> announcementAll() {
+        getCurrentUser();
+        return postRepository.announcement();
+    }
+
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User current = userRepo.getByEmail(email);
-        if (current.getRole().equals(Role.ADMIN))
+        if (current.getRole().equals(Role.ADMIN)|| current.getRole().equals(Role.VENDOR))
             return current;
         else throw new AccessDeniedException("Forbidden 403");
     }

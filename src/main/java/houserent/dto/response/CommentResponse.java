@@ -1,11 +1,26 @@
 package houserent.dto.response;
 
-import java.time.ZonedDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-public record CommentResponse(
-        Long id,
-        String comment,
-        ZonedDateTime date,
-        String image,
-        int mark) {
+import java.time.ZonedDateTime;
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class CommentResponse {
+    private Long id;
+    private String comment;
+    private ZonedDateTime date;
+    private List<String> images;
+    private int mark;
+
+    public CommentResponse(Long id, String comment, ZonedDateTime date, int mark) {
+        this.id = id;
+        this.comment = comment;
+        this.date = date;
+        this.mark = mark;
+    }
 }

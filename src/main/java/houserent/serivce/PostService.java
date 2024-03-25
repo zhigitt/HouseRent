@@ -1,9 +1,6 @@
 package houserent.serivce;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 6db82be01c2a9595fc3a42e5720370c04306c800
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.*;
 import houserent.entity.enums.HomeType;

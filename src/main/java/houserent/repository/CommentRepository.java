@@ -9,15 +9,18 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment,Long> {
 
-    @Query("select new houserent.dto.response.CommentResponse(c.id,c.comment,c.date,c.image,c.mark) from Comment  c")
+    @Query("select new houserent.dto.response.CommentResponse(c.id,c.comment,c.date,c.mark) from Comment  c")
     List<CommentResponse> getAll();
 
-    @Query("select new houserent.dto.response.CommentResponse(c.id,c.comment,c.date,c.image,c.mark) from Comment c join c.user u where u.id =:id ")
+    @Query("select new houserent.dto.response.CommentResponse(c.id,c.comment,c.date,c.mark) from Comment c join c.user u where u.id =:id ")
     List<CommentResponse> findCommentsByUserId(Long id);
 
     @Query("delete from Comment c where c.user.id =:id")
     void deleteComWithUserId(Long id);
 
-    @Query("select new houserent.dto.response.CommentResponse(c.id,c.comment,c.date,c.image,c.mark) from Comment c join c.post p where p.id =:id")
+    @Query("select new houserent.dto.response.CommentResponse(c.id,c.comment,c.date,c.mark) from Comment c join c.post p where p.id =:id")
     List<CommentResponse> findCommentsByPostId(Long id);
+
+    @Query("delete from Comment c where c.post.id =:id")
+    void deleteComWithPostId(Long id);
 }

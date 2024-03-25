@@ -2,10 +2,7 @@ package houserent.serivce.impl;
 
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.*;
-import houserent.entity.Address;
-import houserent.entity.Comment;
-import houserent.entity.Post;
-import houserent.entity.User;
+import houserent.entity.*;
 import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Region;
 import houserent.entity.enums.Role;
@@ -24,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,6 +154,26 @@ public class PostServiceImpl implements PostService {
     public List<PostAnnouncementAll> announcementAll() {
         getCurrentUser();
         return postRepository.announcement();
+    }
+
+    @Override
+    public FavoritePost favoritePost(Long postId) {
+
+        FavoritePost favoritePost = postRepository.favoriteVendor(postId);
+
+        Post post = postRepository.getByIds(favoritePost.getId());
+        List<InFavoriteResponse> inFavoriteResponses = new ArrayList<>();
+        for (InFavorite inFavorite : post.getInFavorites()) {
+            inFavoriteResponses.add(new InFavoriteResponse(inFavorite.getUser().getName(),inFavorite.getId(), inFavorite.getUser().getName(), inFavorite.getDate()));
+        }
+
+        List<CommentResponse> commentResponses = new ArrayList<>();
+        for (Comment comment : post.getComments()) {
+            commentResponses.add(new CommentResponse(comment.getUser().getName(),comment.getId(), comment.getComment(),comment.getDate(),comment.getImage(),comment.getMark()));
+        }
+        favoritePost.setInFavorites(inFavoriteResponses);
+        favoritePost.setComments(commentResponses);
+        return favoritePost;
     }
 
     private User getCurrentUser() {

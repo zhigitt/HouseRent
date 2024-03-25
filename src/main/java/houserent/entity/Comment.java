@@ -31,4 +31,10 @@ public class Comment {
 
     @ManyToOne
     private User user;
+
+    public Comment(Long id, String comment, ZonedDateTime date) {
+        this.id = id;
+        this.comment = comment;
+        this.date = date;
+    }
 }

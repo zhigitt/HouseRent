@@ -70,10 +70,10 @@ public class PostAPI {
         return postService.announcementAll();
     }
 
-//    @GetMapping("/favorite")
-//    public FavoritePost favoritePost (){
-//        return postService.favoritePost();
-//    }
+    @GetMapping("/favorite/{postId}")
+    public FavoritePost favoritePost (@PathVariable Long postId){
+        return postService.favoritePost(postId);
+    }
 
 
 

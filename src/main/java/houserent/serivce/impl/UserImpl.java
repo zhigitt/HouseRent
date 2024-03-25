@@ -181,8 +181,7 @@ public class UserImpl implements UserService {
                 rentInfo.setPost(post);
                 rentInfo.setChekin(rentInfoRequest.getChekin());
                 rentInfo.setChekOut(rentInfoRequest.getChekOut());
-
-                rentInfoRepo.save(rentInfoRepo);
+                rentInfoRepo.save(rentInfo);
 
                 return SimpleResponse
                         .builder()

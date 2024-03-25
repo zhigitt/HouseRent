@@ -29,4 +29,6 @@ public interface PostService {
     List<PostVendorAll> vendorAll();
 
     List<PostAnnouncementAll> announcementAll();
+
+    FavoritePost favoritePost(Long postId);
 }

@@ -25,6 +25,12 @@ public class InFavorite {
     @OneToOne
     private User user;
 
-    @ManyToMany
+    @ManyToMany()
     private List<Post> posts;
+
+
+    public InFavorite(Long id, ZonedDateTime date) {
+        this.id = id;
+        this.date = date;
+    }
 }

@@ -49,6 +49,7 @@ public class CommentApi{
     @PostMapping("/delete/{postId}")
     public SimpleResponse delete(@PathVariable Long postId){
         commentService.delete(postId);
+        System.out.println("api");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Successfully deleted!")

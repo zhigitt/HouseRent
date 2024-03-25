@@ -1,6 +1,6 @@
 package houserent.serivce.impl;
 
-import houserent.dto.response.SimpleResponse;
+import houserent.dto.SimpleResponse;
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.PaginationPost;
 import houserent.dto.response.PostResponseAlls;
@@ -108,7 +108,6 @@ public class PostServiceImpl implements PostService {
                         .price(post.getPrice())
                         .description(post.getDescription())
                         .persons(post.getPersons())
-                        .mark(post.getMark())
                         .region(post.getAddress().getRegion())
                         .city(post.getAddress().getCity())
                         .street(post.getAddress().getStreet())
@@ -122,48 +121,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseOne findPost(Long postId) {
-        Post post = postRepository.findPostId(postId);
-        List<Comment> comments = post.getComments(); // Получаем список всех комментариев для данного поста
-        List<CommentResponse> commentResponses = mapToCommentResponse(comments);
-        return mapToPostResponse(post, commentResponses);
+        return postRepository.findPostId(postId);
     }
-
-    private PostResponseOne mapToPostResponse(Post post, List<CommentResponse> commentResponses) {
-        return new PostResponseOne(
-                post.getTitle(),
-                post.getImage(),
-                post.getHometype(),
-                post.getPersons(),
-                post.getMark(),
-                post.getAddress().getCity(),
-                post.getAddress().getRegion(),
-                post.getAddress().getStreet(),
-                post.getDescription(),
-                post.getUsers().getName(),
-                post.getUsers().getEmail(),
-                post.getUsers().getRentInfo(),
-                post.isFavorite(),
-                post.isBook(),
-                commentResponses
-        );
-    }
-
-    private List<CommentResponse> mapToCommentResponse(List<Comment> comments) {
-        List<CommentResponse> commentResponses = new ArrayList<>();
-        for (Comment comment : comments) {
-            // Создаем объект CommentResponse и заполняем его данными из Comment
-            CommentResponse commentResponse = new CommentResponse(
-                    comment.getId(),
-                    comment.getComment(),
-                    comment.getDate(),
-                    comment.getImage(),
-                    comment.getMark()
-            );
-            commentResponses.add(commentResponse);
-        }
-        return commentResponses;
-    }
-
 
     @Override
     public PostResponseAlls search(String word) {
@@ -183,8 +142,6 @@ public class PostServiceImpl implements PostService {
         }
         return postRepository.getAll();
     }
-
-
 
     @Override
     public List<PostResponseAlls> priceFilter(String word) {
@@ -216,7 +173,7 @@ public class PostServiceImpl implements PostService {
 
         List<CommentResponse> commentResponses = new ArrayList<>();
         for (Comment comment : post.getComments()) {
-            commentResponses.add(new CommentResponse(comment.getId(), comment.getComment(),comment.getDate(),comment.getImage(),comment.getMark()));
+            commentResponses.add(new CommentResponse(comment.getUser().getName(),comment.getId(), comment.getComment(),comment.getDate(),comment.getImage(),comment.getMark()));
         }
         favoritePost.setInFavorites(inFavoriteResponses);
         favoritePost.setComments(commentResponses);

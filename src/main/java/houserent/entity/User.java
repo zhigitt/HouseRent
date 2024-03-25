@@ -3,10 +3,12 @@ package houserent.entity;
 import houserent.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.boot.model.internal.BinderHelper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class User implements UserDetails {
     private Long id;
     private String name;
     private String email;
-    private int card;
+    private BigDecimal card;
     private String password;
     private String phoneNumber;
 
@@ -43,7 +45,7 @@ public class User implements UserDetails {
     @OneToOne
     private RentInfo rentInfo;
 
-    public User(String name, String email, int card, String password, String phoneNumber, Role role) {
+    public User(String name, String email, BigDecimal card, String password, String phoneNumber, Role role) {
         this.name = name;
         this.email = email;
         this.card = card;

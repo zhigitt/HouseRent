@@ -1,5 +1,6 @@
 package houserent.serivce;
 
+import houserent.dto.request.RentInfoRequest;
 import houserent.dto.response.*;
 import houserent.dto.request.ReplenishRequest;
 import houserent.dto.request.SignInRequest;
@@ -17,4 +18,6 @@ public interface UserService {
     SimpleResponse addFavoritePost(Long postId);
 
     List<FavoritePostsResponse> getAllFavoritePosts();
+
+    SimpleResponse toBook(Long postId, RentInfoRequest rentInfoRequest);
 }

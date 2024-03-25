@@ -1,10 +1,9 @@
 package houserent.api;
 
+import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.ReplenishRequest;
-import houserent.dto.response.PostResponseAll;
 import houserent.serivce.UserService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class UserAPI {
 
     @Secured({"CLIENT", "VENDOR"})
     @GetMapping("/getAllFavorites")
-    List<PostResponseAll> getAll(){
+    List<PostResponseAlls> getAll(){
         return userService.getAllFavoritePosts();
     }
 //    @Secured("CLIENT")

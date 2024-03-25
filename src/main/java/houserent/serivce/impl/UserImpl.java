@@ -1,12 +1,12 @@
 package houserent.serivce.impl;
 
 import houserent.config.jwt.JwtService;
+import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.ReplenishRequest;
 import houserent.dto.request.SignInRequest;
 import houserent.dto.request.SignUpRequest;
 import houserent.dto.response.LoginResponse;
-import houserent.dto.response.PostResponseAll;
 import houserent.dto.response.SignUpResponse;
 import houserent.entity.Post;
 import houserent.entity.User;
@@ -86,9 +86,7 @@ public class UserImpl implements UserService {
 
     @Override
     @Transactional
-    public houserent.dto.SimpleResponse replenish(ReplenishRequest replenishRequest) {
-        User user = getCurrentUser();
-    public SimpleResponse replenish(ReplenishRequest replenishRequest) {
+    public houserent.dto.response.SimpleResponse replenish(ReplenishRequest replenishRequest) {
         User user =getCurrentUser();
 
         int card = getCurrentUser().getCard();
@@ -128,20 +126,11 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public List<PostResponseAll> getAllFavoritePosts() {
-        User user = getCurrentUser();
+    public List<PostResponseAlls> getAllFavoritePosts() {
+        User user = new User();
 
         List<Post> posts = new ArrayList<>(user.getFavoriteBasket());
-        List<PostResponseAll> postResponseAlls = new ArrayList<>();
-
-        for (Post post : posts) {
-            postResponseAlls.add(new PostResponseAll(
-                    post.getImage(),
-                    post.getDescription(),
-                    post.getPersons(),
-                    post.get
-            ))
-        }
+        List<PostResponseAlls> postResponseAlls = new ArrayList<>();
 
 
 

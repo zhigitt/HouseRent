@@ -25,5 +25,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     boolean existsByEmail(String email);
 
+    // SimpleResponse replenish(SignUpRequest signUpRequest);
 //    SimpleResponse replenish(SignUpRequest signUpRequest);
 }

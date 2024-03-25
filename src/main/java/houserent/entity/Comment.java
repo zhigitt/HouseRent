@@ -28,11 +28,18 @@ public class Comment {
     @ManyToOne
     private Post post;
 
-    @OneToMany(mappedBy = "comment")
-    private List<Like> likes;
+    @OneToOne(mappedBy = "comment")
+    private Like like;
 
     @ManyToOne
     private User user;
+
+    public Comment(Long id, String comment, ZonedDateTime date) {
+        this.id = id;
+        this.comment = comment;
+        this.date = date;
+    }
+}
     @PrePersist
     private void prepersist(){
         this.date = ZonedDateTime.now();

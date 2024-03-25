@@ -38,7 +38,7 @@ public class Post {
     @OneToOne
     private Address address;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "posts")
     private List<InFavorite> inFavorites;
 
 }

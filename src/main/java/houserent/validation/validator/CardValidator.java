@@ -4,10 +4,12 @@ import houserent.validation.CardValidation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class CardValidator implements ConstraintValidator<CardValidation, Integer> {
+import java.math.BigDecimal;
+
+public class CardValidator implements ConstraintValidator<CardValidation, BigDecimal> {
     @Override
-    public boolean isValid(Integer card, ConstraintValidatorContext constraintValidatorContext) {
-        if(card > 0){
+    public boolean isValid(BigDecimal card, ConstraintValidatorContext constraintValidatorContext) {
+        if(card.compareTo(BigDecimal.ZERO) > 0){
             return true;
         }
         return false;

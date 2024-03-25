@@ -17,6 +17,13 @@ public class CommentResponse {
     private List<String> images;
     private int mark;
 
+public record CommentResponse(
+        String name,
+        Long id,
+        String comment,
+        ZonedDateTime date,
+        String image,
+        int mark) {
     public CommentResponse(Long id, String comment, ZonedDateTime date, int mark) {
         this.id = id;
         this.comment = comment;

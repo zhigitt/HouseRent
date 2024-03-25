@@ -1,16 +1,19 @@
 package houserent.serivce.impl;
 
 import houserent.config.jwt.JwtService;
+import houserent.dto.request.RentInfoRequest;
 import houserent.dto.response.*;
 import houserent.dto.request.ReplenishRequest;
 import houserent.dto.request.SignInRequest;
 import houserent.dto.request.SignUpRequest;
 import houserent.entity.Post;
+import houserent.entity.RentInfo;
 import houserent.entity.User;
 import houserent.entity.enums.Role;
 import houserent.exception.ForbiddenException;
 import houserent.exception.NotFoundException;
 import houserent.repository.PostRepository;
+import houserent.repository.RentInfoRepo;
 import houserent.repository.UserRepo;
 import houserent.serivce.UserService;
 import jakarta.transaction.Transactional;
@@ -20,6 +23,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +38,7 @@ public class UserImpl implements UserService {
     private final PostRepository postRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
+    private final RentInfoRepo rentInfoRepo;
 
     @Override
     public SignUpResponse register(SignUpRequest signUpRequest) {
@@ -86,10 +93,11 @@ public class UserImpl implements UserService {
     public houserent.dto.response.SimpleResponse replenish(ReplenishRequest replenishRequest) {
         User user =getCurrentUser();
 
-        int card = getCurrentUser().getCard();
-        card += replenishRequest.getCard();
+        BigDecimal card = getCurrentUser().getCard();
+        card = card.add(replenishRequest.getCard());
 
         getCurrentUser().setCard(card);
+
 
         return SimpleResponse
                 .builder()
@@ -139,6 +147,68 @@ public class UserImpl implements UserService {
         }
 
         return favoritePostsResponses;
+    }
+
+    @Override
+    @Transactional
+    public SimpleResponse toBook(Long postId, RentInfoRequest rentInfoRequest) {
+        Post post = postRepository.findById(postId).orElseThrow(() ->
+                new NotFoundException("Mynda IDde post jok!"));
+
+
+        User vendor = post.getUsers();
+        User currentUser = getCurrentUser();
+        RentInfo rentInfo = new RentInfo();
+
+        LocalDate checkIn = rentInfoRequest.getChekin();
+        LocalDate checkOut = rentInfoRequest.getChekOut();
+
+        int daysBooking = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
+
+        if (post.isBook() == false){
+            BigDecimal currentUserCard = currentUser.getCard();
+            BigDecimal postPrice = post.getPrice();
+
+            if (currentUserCard.compareTo(postPrice) >= 0){
+                BigDecimal total = postPrice.multiply(BigDecimal.valueOf(daysBooking));
+
+                currentUserCard = currentUserCard.subtract(total);
+
+                vendor.setCard(total);
+                post.setBook(true);
+
+                rentInfo.setUser(currentUser);
+                rentInfo.setPost(post);
+                rentInfo.setChekin(rentInfoRequest.getChekin());
+                rentInfo.setChekOut(rentInfoRequest.getChekOut());
+                rentInfoRepo.save(rentInfo);
+
+                return SimpleResponse
+                        .builder()
+                        .httpStatus(HttpStatus.OK)
+                        .message("Brondoldu: " + post.getTitle()+
+                                 "Price: " + postPrice +
+                                 "Chek in: " + checkIn +
+                                "Chek out: " + checkOut +
+                                 "Kundor: " + daysBooking+
+                                 "Summa: $" +total)
+                        .build();
+            }else {
+                return SimpleResponse
+                        .builder()
+                        .httpStatus(HttpStatus.OK)
+                        .message("Catatochkada akcha jetishsiz!")
+                        .build();
+            }
+
+        }else {
+            return SimpleResponse
+                    .builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message(post.getTitle() + " bosh emes brondolgon!")
+                    .build();
+
+        }
     }
 
     private User getCurrentUser() {

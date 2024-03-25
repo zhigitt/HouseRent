@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class InitService {
@@ -20,7 +22,7 @@ public class InitService {
         User admin = new User(
                 "Admin",
                 "admin@gmail.com",
-                0,
+                BigDecimal.valueOf(0),
                 passwordEncoder.encode( "1234"),
                 "+996701548565",
                 Role.ADMIN

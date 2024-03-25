@@ -20,6 +20,11 @@ public class RentInfo {
     private LocalDate chekin;
     private LocalDate chekOut;
 
+    public RentInfo(LocalDate chekin, LocalDate chekOut) {
+        this.chekin = chekin;
+        this.chekOut = chekOut;
+    }
+
     @ManyToOne
     private User user;
 

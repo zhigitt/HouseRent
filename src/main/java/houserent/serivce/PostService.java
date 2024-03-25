@@ -1,6 +1,5 @@
 package houserent.serivce;
 
-
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.*;
 import houserent.entity.enums.HomeType;
@@ -30,4 +29,6 @@ public interface PostService {
     List<PostVendorAll> vendorAll();
 
     List<PostAnnouncementAll> announcementAll();
+
+    FavoritePost favoritePost(Long postId);
 }

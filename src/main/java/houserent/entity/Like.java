@@ -21,7 +21,7 @@ public class Like {
     @ElementCollection
     private List<Long> disLike = new ArrayList<>();
 
-    @ManyToOne
+    @OneToOne
     private Comment comment;
 
     @OneToOne

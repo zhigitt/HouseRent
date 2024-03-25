@@ -3,6 +3,10 @@ package houserent.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.w3c.dom.Comment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,12 +17,14 @@ public class Like {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "like_seq")
     @SequenceGenerator(name = "like_seq", allocationSize = 1)
     private Long id;
-    private boolean isLike;
-    private boolean disLike;
-
-    @ManyToOne
-    private Comment comment;
+    @ElementCollection
+    private List<Long> isLike = new ArrayList<>();
+    @ElementCollection
+    private List<Long> disLike = new ArrayList<>();
 
     @OneToOne
-    private User user;
+    private Comment comment;
+
+//    @OneToOne
+//    private User user;
 }

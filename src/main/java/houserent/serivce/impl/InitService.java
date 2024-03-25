@@ -18,7 +18,7 @@ public class InitService {
     private final PasswordEncoder passwordEncoder;
 
 //    @PostConstruct @Transactional
-    void saveAdmin(){
+    public void saveAdmin(){
         User admin = new User(
                 "Admin",
                 "admin@gmail.com",

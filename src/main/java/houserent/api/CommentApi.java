@@ -42,7 +42,7 @@ public class CommentApi{
     @Secured("CLIENT")
     @PostMapping("/findByPost/{postId}")
     public List<CommentResponse> getByPost(@PathVariable Long postId){
-        return commentService.findByUserId(postId);
+        return commentService.findByPostId(postId);
     }
 
     @Secured({"CLIENT","ADMIN"})

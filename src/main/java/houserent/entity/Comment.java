@@ -39,7 +39,7 @@ public class Comment {
         this.comment = comment;
         this.date = date;
     }
-}
+
     @PrePersist
     private void prepersist(){
         this.date = ZonedDateTime.now();

@@ -1,19 +1,17 @@
 package houserent.serivce.impl;
 
+import houserent.dto.SimpleResponse;
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.PostResponseAll;
 import houserent.dto.response.PostResponseOne;
-import houserent.dto.response.SimpleResponse;
 import houserent.entity.Address;
 import houserent.entity.Post;
 import houserent.entity.User;
-import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Role;
 import houserent.repository.PostRepository;
 import houserent.repository.UserRepo;
 import houserent.serivce.PostService;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

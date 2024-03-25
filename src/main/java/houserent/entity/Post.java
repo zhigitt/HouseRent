@@ -23,6 +23,8 @@ public class Post {
     private String description;
     @ElementCollection
     private List<String> image;
+
+    @Enumerated(EnumType.STRING)
     private HomeType hometype;
     private BigDecimal price;
     private int persons;

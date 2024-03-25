@@ -1,9 +1,9 @@
 package houserent.api;
 
+import houserent.dto.SimpleResponse;
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.PostResponseAll;
 import houserent.dto.response.PostResponseOne;
-import houserent.dto.response.SimpleResponse;
 import houserent.serivce.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

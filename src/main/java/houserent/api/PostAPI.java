@@ -1,6 +1,5 @@
 package houserent.api;
 
-import houserent.dto.SimpleResponse;
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.PaginationPost;
 import houserent.dto.response.PostResponseAlls;

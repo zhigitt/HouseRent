@@ -124,7 +124,7 @@ public class UserImpl implements UserService {
 
     @Override
     public List<FavoritePostsResponse> getAllFavoritePosts() {
-        User user = new User();
+        User user = getCurrentUser();
 
         List<Post> posts = new ArrayList<>(user.getFavoriteBasket());
         List<FavoritePostsResponse> favoritePostsResponses = new ArrayList<>();
@@ -138,9 +138,7 @@ public class UserImpl implements UserService {
             ));
         }
 
-
-
-        return null;
+        return favoritePostsResponses;
     }
 
     private User getCurrentUser() {

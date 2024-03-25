@@ -9,6 +9,7 @@ public class HouseRentApplication {
     public static void main(String[] args) {
         SpringApplication.run(HouseRentApplication.class, args);
         System.out.println("Airbnb");
+        System.out.println("Ali");
     }
 
 }

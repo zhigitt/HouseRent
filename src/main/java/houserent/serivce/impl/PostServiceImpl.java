@@ -1,10 +1,10 @@
 package houserent.serivce.impl;
 
+import houserent.dto.SimpleResponse;
 import houserent.dto.request.PostRequest;
 import houserent.dto.response.PaginationPost;
 import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.PostResponseOne;
-import houserent.dto.response.SimpleResponse;
 import houserent.entity.Address;
 import houserent.entity.Comment;
 import houserent.entity.Post;
@@ -17,7 +17,6 @@ import houserent.repository.PostRepository;
 import houserent.repository.UserRepo;
 import houserent.serivce.PostService;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -24,6 +24,7 @@ public class Post {
     @ElementCollection
     private List<String> image;
 
+    private String image;
     @Enumerated(EnumType.STRING)
     private HomeType hometype;
     private BigDecimal price;

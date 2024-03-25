@@ -1,6 +1,6 @@
 package houserent.serivce;
 
-import houserent.dto.SimpleResponse;
+import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.ReplenishRequest;
 import houserent.dto.request.SignInRequest;
 import houserent.dto.request.SignUpRequest;
@@ -20,4 +20,5 @@ public interface UserService {
     SimpleResponse addFavoritePost(Long postId);
 
     List<PostResponseAll> getAllFavoritePosts();
+    SimpleResponse replenish(ReplenishRequest replenishRequest);
 }

@@ -11,5 +11,6 @@ public class SignInRequest {
     @EmailValidation
     private String email;
 
+    @PasswordValidation
     private String password;
 }

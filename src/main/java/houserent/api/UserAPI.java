@@ -1,6 +1,6 @@
 package houserent.api;
 
-import houserent.dto.SimpleResponse;
+import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.ReplenishRequest;
 import houserent.dto.response.PostResponseAll;
 import houserent.serivce.UserService;
@@ -35,5 +35,11 @@ public class UserAPI {
     List<PostResponseAll> getAll(){
         return userService.getAllFavoritePosts();
     }
+//    @Secured("CLIENT")
+//    @PutMapping("/addFavorite")
+//    SimpleResponse addPost(@PathVariable Long postId ){
+//        return userService.addFavoritePost(postId);
+//    }
+//
 
 }

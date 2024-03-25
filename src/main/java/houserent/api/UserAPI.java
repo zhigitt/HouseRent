@@ -1,15 +1,15 @@
 package houserent.api;
 
-import houserent.dto.SimpleResponse;
-import houserent.dto.request.SignUpRequest;
-import houserent.repository.UserRepo;
+import houserent.dto.response.FavoritePostsResponse;
+import houserent.dto.response.PostResponseAlls;
+import houserent.dto.response.SimpleResponse;
+import houserent.dto.request.ReplenishRequest;
 import houserent.serivce.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,9 +20,26 @@ public class UserAPI {
 
     @Secured("CLIENT")
     @PostMapping("/replenish")
-    SimpleResponse replenish(@RequestBody SignUpRequest signUpRequest){
-        return null;
+    SimpleResponse replenish(@RequestBody ReplenishRequest replenishRequest){
+        return userService.replenish(replenishRequest);
     }
 
+    @Secured({"CLIENT", "VENDOR"})
+    @PostMapping("/addFavorite/{postId}")
+    SimpleResponse addPost(@PathVariable Long postId ){
+        return userService.addFavoritePost(postId);
+    }
+
+    @Secured({"CLIENT", "VENDOR"})
+    @GetMapping("/getAllFavorites")
+    List<FavoritePostsResponse> getAll(){
+        return userService.getAllFavoritePosts();
+    }
+//    @Secured("CLIENT")
+//    @PutMapping("/addFavorite")
+//    SimpleResponse addPost(@PathVariable Long postId ){
+//        return userService.addFavoritePost(postId);
+//    }
+//
 
 }

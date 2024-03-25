@@ -21,11 +21,14 @@ public class Post {
     private Long id;
     private String title;
     private String description;
+    @ElementCollection
     private String image;
+    @Enumerated(EnumType.STRING)
     private HomeType hometype;
     private BigDecimal price;
     private int persons;
     private boolean favorite;
+    private boolean book;
 
     @ManyToOne
     private User users;

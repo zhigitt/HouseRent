@@ -1,10 +1,9 @@
 package houserent.api;
 
-import houserent.dto.SimpleResponse;
+import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.CommentRequest;
 import houserent.dto.response.CommentResponse;
 import houserent.serivce.CommentService;
-import jdk.dynalink.linker.support.SimpleLinkRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;

@@ -1,6 +1,6 @@
 package houserent.repository;
 
-import houserent.dto.SimpleResponse;
+import houserent.dto.response.SimpleResponse;
 import houserent.dto.request.SignUpRequest;
 import houserent.entity.User;
 import houserent.exception.NotFoundException;
@@ -25,5 +25,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     boolean existsByEmail(String email);
 
-    SimpleResponse replenish(SignUpRequest signUpRequest);
+    // SimpleResponse replenish(SignUpRequest signUpRequest);
+//    SimpleResponse replenish(SignUpRequest signUpRequest);
 }

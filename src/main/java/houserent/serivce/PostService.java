@@ -2,10 +2,7 @@ package houserent.serivce;
 
 import houserent.dto.SimpleResponse;
 import houserent.dto.request.PostRequest;
-import houserent.dto.response.PaginationPost;
-import houserent.dto.response.PostResponseAlls;
-import houserent.dto.response.PostResponseOne;
-import houserent.dto.response.SimpleResponse;
+import houserent.dto.response.*;
 import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Region;
 
@@ -29,4 +26,8 @@ public interface PostService {
     List<PostResponseAlls> filter(HomeType homeType);
 
     List<PostResponseAlls> priceFilter(String word);
+
+    List<PostVendorAll> vendorAll();
+
+    List<PostAnnouncementAll> announcementAll();
 }

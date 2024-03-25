@@ -37,6 +37,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setMark(commentRequest.getMark());
         comment.setUser(user);
         comment.setPost(post);
+        calculateAverageMark(postId);
         commentRepository.save(comment);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -94,6 +95,21 @@ public class CommentServiceImpl implements CommentService {
                 .httpStatus(HttpStatus.OK)
                 .message("Successfully updated! ")
                 .build();
+    }
+
+    public double calculateAverageMark(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundException("Post not found with id: " + postId));
+        List<Comment> comments = commentRepository.findByPost(post);
+
+        if (comments.isEmpty()) {
+            return 0; // или любое другое значение по умолчанию
+        }
+
+        int totalMark = comments.stream().mapToInt(Comment::getMark).sum();
+        double averageMark = (double) totalMark / comments.size();
+
+        // Ограничение средней оценки до 5
+        return Math.min(5, averageMark);
     }
 
 

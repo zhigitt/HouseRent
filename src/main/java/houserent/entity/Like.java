@@ -16,7 +16,7 @@ public class Like {
     private boolean isLike;
     private boolean disLike;
 
-    @ManyToOne
+    @OneToOne
     private Comment comment;
 
     @OneToOne

@@ -26,8 +26,8 @@ public class Comment {
     @ManyToOne
     private Post post;
 
-    @OneToMany(mappedBy = "comment")
-    private List<Like> likes;
+    @OneToOne(mappedBy = "comment")
+    private Like like;
 
     @ManyToOne
     private User user;

@@ -10,7 +10,7 @@ public class SignUpRequest {
     private String name;
 
     @EmailValidation
-    @UniqueEmailValidation
+//    @UniqueEmailValidation
     private String email;
 
     @PasswordValidation

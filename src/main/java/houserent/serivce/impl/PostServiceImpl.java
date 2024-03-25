@@ -4,7 +4,11 @@ import houserent.dto.request.PostRequest;
 import houserent.dto.response.PaginationPost;
 import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.PostResponseOne;
+<<<<<<< HEAD
+import houserent.dto.response.SimpleResponse;
+=======
 import houserent.dto.response.*;
+>>>>>>> 65a8f71e275b2ad071e627ab0e454ad75d2b54d2
 import houserent.entity.Address;
 import houserent.entity.Post;
 import houserent.entity.User;

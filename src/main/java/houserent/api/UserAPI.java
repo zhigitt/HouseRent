@@ -35,11 +35,6 @@ public class UserAPI {
     List<FavoritePostsResponse> getAll(){
         return userService.getAllFavoritePosts();
     }
-//    @Secured("CLIENT")
-//    @PutMapping("/addFavorite")
-//    SimpleResponse addPost(@PathVariable Long postId ){
-//        return userService.addFavoritePost(postId);
-//    }
-//
+
 
 }

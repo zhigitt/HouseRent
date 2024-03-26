@@ -15,6 +15,6 @@ import java.util.List;
 public class FavoritePostsResponse {
     private Long id;
     private String title;
-    private String image;
+    private List<String> image;
     private BigDecimal price;
 }

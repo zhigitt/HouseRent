@@ -3,6 +3,7 @@ package houserent.dto.request;
 import houserent.entity.Address;
 import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Region;
+import jakarta.persistence.ElementCollection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,8 @@ public class PostRequest{
 
     private String title;
     private String description;
-    private String image;
+    @ElementCollection
+    private List<String> images;
     private HomeType hometype;
     private BigDecimal price;
     private int persons;

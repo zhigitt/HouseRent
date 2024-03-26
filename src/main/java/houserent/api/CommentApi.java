@@ -18,7 +18,7 @@ import java.util.List;
 public class CommentApi{
     private final CommentService commentService;
 
-    @Secured("CLIENT")
+//    @Secured("CLIENT")
     @PostMapping("/save/{postId}")
     public SimpleResponse save(@PathVariable Long postId, @RequestBody CommentRequest commentRequest){
      commentService.save(postId,commentRequest);

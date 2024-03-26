@@ -16,7 +16,6 @@ import java.util.List;
 public class FavoritePost {
     private Long id;
     private String title;
-    private String image;
     private HomeType hometype;
     private int persons;
     private String city;
@@ -25,11 +24,11 @@ public class FavoritePost {
     private String description;
     private List<InFavoriteResponse> inFavorites;
     private List<CommentResponse> comments;
+    private List<String> images;
 
-    public FavoritePost(Long id, String title, String image, HomeType hometype, int persons, String city, Region region, String street, String description) {
+    public FavoritePost(Long id, String title, HomeType hometype, int persons, String city, Region region, String street, String description) {
         this.id = id;
         this.title = title;
-        this.image = image;
         this.hometype = hometype;
         this.persons = persons;
         this.city = city;
@@ -38,7 +37,5 @@ public class FavoritePost {
         this.description = description;
     }
 }
-//    public FavoritePost(Long id, String title, String image, HomeType hometype, int persons, String city, Region region, String street, String description) {
-//        this(id, title, image, hometype, persons, city, region, street, description, null, null);
-//    }
+
 

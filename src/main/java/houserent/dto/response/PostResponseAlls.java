@@ -15,15 +15,31 @@ import java.util.List;
 @Builder
 public class PostResponseAlls
 {
+    private Long id;
     private String title;
-    private String image;
     private BigDecimal price;
     private String description;
     private Integer persons;
-    private double mark;
+    private Double mark;
     private String city;
     private Region region;
     private String street;
     private Boolean favorite;
     private Boolean book;
+    private List<String> images;
+    public PostResponseAlls(Long id,String title, BigDecimal price, String description, Integer persons, Double mark, String city, Region region, String street, Boolean favorite, Boolean book) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.persons = persons;
+        this.mark = mark != null ? mark : 0.0;
+        this.city = city;
+        this.region = region;
+        this.street = street;
+        this.favorite = favorite;
+        this.book = book;
+    }
+
+
 }

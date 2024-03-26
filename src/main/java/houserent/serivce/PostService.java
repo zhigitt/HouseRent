@@ -18,7 +18,7 @@ public interface PostService {
 
     PostResponseOne findPost(Long postId);
 
-    PostResponseAlls search(String word);
+    List<PostResponseAlls> search(String word);
 
     List<PostResponseAlls> sort(Region region);
 

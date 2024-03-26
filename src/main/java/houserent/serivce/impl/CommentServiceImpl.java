@@ -9,6 +9,7 @@ import houserent.entity.Post;
 import houserent.entity.User;
 import houserent.exception.NotFoundException;
 import houserent.repository.CommentRepository;
+import houserent.repository.LikeRepository;
 import houserent.repository.PostRepository;
 import houserent.repository.UserRepo;
 import houserent.serivce.CommentService;
@@ -26,6 +27,7 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepo userRepo;
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final LikeRepository likeRepository;
 
     @Override @Transactional
     public SimpleResponse save(Long postId,CommentRequest commentRequest) {
@@ -48,6 +50,7 @@ public class CommentServiceImpl implements CommentService {
         post.setMark(limitedRating);
 
         Like like = new Like();
+        likeRepository.save(like);
         like.setComment(comment);
         comment.setLike(like);
         return SimpleResponse.builder()

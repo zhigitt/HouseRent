@@ -9,6 +9,7 @@ import houserent.repository.PostRepository;
 import houserent.repository.UserRepo;
 import houserent.serivce.CommentService;
 import houserent.serivce.LikeService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.List;
 public class LikeServiceImpl implements LikeService {
     private final CommentRepository commentRepository;
     private final UserRepo userRepo;
-    @Override
+    @Override @Transactional
     public void addLikes(Long commentId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepo.getByEmail(email);
@@ -35,7 +36,7 @@ public class LikeServiceImpl implements LikeService {
         }
     }
 
-    @Override
+    @Override @Transactional
     public void disLikes(Long commentId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepo.getByEmail(email);

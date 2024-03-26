@@ -46,7 +46,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "FROM Post p LEFT JOIN p.comments c JOIN p.address a where p.hometype = :homeType")
     List<PostResponseAlls> filterHouseAndApartment(HomeType homeType);
 
-    @Query("select new houserent.dto.response.PostResponseAlls(p.title, p.image,p.price, p.description, p.persons, c.mark, a.city, a.region, a.street, p.favorite, p.book) FROM Post p LEFT JOIN p.comments c JOIN p.address a order by      case when :word ='asc' then p.price end asc ,case when :word ='desc' then p.price end desc")
+    @Query("select new houserent.dto.response.PostResponseAlls(p.title, p.image,p.price, p.description, p.persons, c.mark, a.city, a.region, a.street, p.favorite, p.book)" +
+            " FROM Post p LEFT JOIN p.comments c JOIN p.address a order by      case when :word ='asc' then p.price end asc ,case when :word ='desc' then p.price end desc")
     List<PostResponseAlls> priceFilter(String word);
 
     @Query("select p from Post p")

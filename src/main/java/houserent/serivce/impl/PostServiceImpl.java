@@ -4,7 +4,6 @@ import houserent.dto.request.PostRequest;
 import houserent.dto.response.PaginationPost;
 import houserent.dto.response.PostResponseAlls;
 import houserent.dto.response.PostResponseOne;
-import houserent.dto.response.SimpleResponse;
 import houserent.dto.response.*;
 import houserent.entity.*;
 
@@ -178,6 +177,7 @@ public class PostServiceImpl implements PostService {
 
         List<CommentResponse> commentResponses = new ArrayList<>();
         for (Comment comment : post.getComments()) {
+            commentResponses.add(new CommentResponse(comment.getId(), comment.getComment(),comment.getDate(),comment.getImage(),comment.getMark()));
             commentResponses.add(new CommentResponse(comment.getUser().getName(),comment.getId(), comment.getComment(),comment.getDate(),comment.getImages(),comment.getMark()));
         }
         favoritePost.setInFavorites(inFavoriteResponses);

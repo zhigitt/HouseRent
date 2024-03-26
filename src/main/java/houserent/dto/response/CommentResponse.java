@@ -24,6 +24,13 @@ public class CommentResponse {
         this.mark = mark;
     }
 
+public record CommentResponse(
+
+        Long id,
+        String comment,
+        ZonedDateTime date,
+        String image,
+        double mark) {
     public CommentResponse(String name, Long id, String comment, ZonedDateTime date, List<String> images, int mark) {
     }
 }

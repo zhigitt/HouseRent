@@ -12,6 +12,9 @@ import java.util.List;
 @Builder
 public class CommentRequest {
     private String comment;
+    private ZonedDateTime date;
+    private String image;
+    private double mark;
     private List<String> image;
     private int mark;
 }

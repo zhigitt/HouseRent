@@ -81,6 +81,10 @@ public class PostServiceImpl implements PostService {
     public SimpleResponse delete(Long postId) {
         getCurrentUser();
         Post post = postRepository.getByIds(postId);
+        postRepository.deleteInfavorite(postId);
+        postRepository.deleteRent(postId);
+        postRepository.deleteBook(postId);
+        postRepository.deleteBasket(postId);
         postRepository.delete(post);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -239,8 +243,12 @@ getCurrentUserClient();
                 commentResponses.add(new CommentResponse(comment.getId(), comment.getComment(),comment.getDate(),commentImage, comment.getMark()));
                 comment.setImages(comment.getImages());
         }
+        List<String> imag = new ArrayList<>();
+        for (String image : post.getImages()) {
+            imag.add(image);
+        }
 
-
+        favoritePost.setImages(imag);
         favoritePost.setInFavorites(inFavoriteResponses);
         favoritePost.setComments(commentResponses);
         return favoritePost;

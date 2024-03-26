@@ -8,9 +8,11 @@ import houserent.entity.Post;
 import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Region;
 import houserent.exception.NotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -63,10 +65,23 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p")
     Page<Post> getAllPage(Pageable pageable);
 
-    @Query("select new houserent.dto.response.PostVendorAll(p.id,u.name,u.email,p.title,p.price, p.description, p.persons, MAX(c.mark), a.city, a.region, a.street,r.chekin,r.chekOut) from Post p join p.address a left join p.comments c join p.users u join u.rentInfos r group by u.name,u.email,p.title, p.images,p.price, p.description, p.persons, a.city, a.region, a.street,r.chekin,r.chekOut")
+    @Query("select new houserent.dto.response.PostVendorAll(p.id, u.name, u.email, p.title, p.price, p.description, p.persons, MAX (c.mark), a.city, a.region, a.street, r.chekin, r.chekOut) " +
+            "from Post p " +
+            "join p.address a " +
+            "left join p.comments c " +
+            "join p.users u " +
+            " left join u.rentInfos r group by p.id, u.name, u.email, p.title, p.price, p.description, p.persons,a.city, a.region, a.street, r.chekin, r.chekOut ")
     List<PostVendorAll> vendorAllPost();
 
-    @Query("select new houserent.dto.response.PostAnnouncementAll(p.id,u.name,u.email,p.title,p.price, p.description, p.persons, MAX(c.mark), a.city, a.region, a.street) from Post p join p.address a left join p.comments c join p.users u group by u.name,u.email,p.title, p.images,p.price, p.description, p.persons, a.city, a.region, a.street")
+
+
+
+    @Query("select new houserent.dto.response.PostAnnouncementAll(p.id, u.name, u.email, p.title, p.price, p.description, p.persons, MAX(c.mark), a.city, a.region, a.street) " +
+            "from Post p " +
+            "join p.users u " +
+            "join p.address a " +
+            "left join p.comments c " +
+            "group by p.id, u.name, u.email, p.title, p.price, p.description, p.persons, a.city, a.region, a.street")
     List<PostAnnouncementAll> announcement();
 
     @Query("""
@@ -90,5 +105,21 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select i.images from post_images i where i.post_id =:id",nativeQuery = true)
     List<String> findImage(Long id);
 
+@Modifying
+@Transactional
+@Query(value = "delete from in_favorites_posts where posts_id =:postId",nativeQuery = true)
+    void deleteInfavorite(Long postId);
 
+    @Modifying
+    @Transactional
+    @Query("delete from RentInfo r where r.post.id =:postId")
+    void deleteRent(Long postId);
+    @Modifying
+    @Transactional
+    @Query(value = "delete from users_booking where booking_id =:postId",nativeQuery = true)
+    void deleteBook(Long postId);
+    @Modifying
+    @Transactional
+    @Query(value = "delete from users_favorite_basket where favorite_basket_id =:postId",nativeQuery = true)
+    void deleteBasket(Long postId);
 }

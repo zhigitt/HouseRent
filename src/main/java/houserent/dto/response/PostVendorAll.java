@@ -23,7 +23,6 @@ public class PostVendorAll {
     private String street;
     private LocalDate chekin;
     private LocalDate chekOut;
-    private List<String> images;
 
     public PostVendorAll(Long id, String name, String email, String title, BigDecimal price, String description, Integer persons, double mark, String city, Region region, String street, LocalDate chekin, LocalDate chekOut) {
         this.id = id;
@@ -40,4 +39,7 @@ public class PostVendorAll {
         this.chekin = chekin;
         this.chekOut = chekOut;
     }
+
+    private List<String> images;
+
 }

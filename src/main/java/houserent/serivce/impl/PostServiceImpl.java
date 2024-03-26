@@ -23,8 +23,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,7 +118,45 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseOne findPost(Long postId) {
-        return postRepository.findPostId(postId);
+        Post post = postRepository.findPostId(postId);
+        List<Comment> comments = post.getComments(); // Получаем список всех комментариев для данного поста
+        List<CommentResponse> commentResponses = mapToCommentResponse(comments);
+        return mapToPostResponse(post, commentResponses);
+    }
+    private PostResponseOne mapToPostResponse(Post post, List<CommentResponse> commentResponses) {
+        return new PostResponseOne(
+                post.getTitle(),
+                post.getImage(),
+                post.getHometype(),
+                post.getPersons(),
+                post.getMark(),
+                post.getAddress().getCity(),
+                post.getAddress().getRegion(),
+                post.getAddress().getStreet(),
+                post.getDescription(),
+                post.getUsers().getName(),
+                post.getUsers().getEmail(),
+                post.getUsers().getRentInfo(),
+                post.isFavorite(),
+                post.isBook(),
+                commentResponses
+        );
+    }
+
+    private List<CommentResponse> mapToCommentResponse(List<Comment> comments) {
+        List<CommentResponse> commentResponses = new ArrayList<>();
+        for (Comment comment : comments) {
+            // Создаем объект CommentResponse и заполняем его данными из Comment
+            CommentResponse commentResponse = new CommentResponse(
+                    comment.getId(),
+                    comment.getComment(),
+                    comment.getDate(),
+                    comment.getImage(),
+                    comment.getMark()
+            );
+            commentResponses.add(commentResponse);
+        }
+        return commentResponses;
     }
 
     @Override

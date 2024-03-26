@@ -141,7 +141,7 @@ public class UserImpl implements UserService {
             favoritePostsResponses.add(new FavoritePostsResponse(
                     post.getId(),
                     post.getTitle(),
-                    post.getImage(),
+                    post.getImages(),
                     post.getPrice()
             ));
         }

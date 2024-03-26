@@ -30,7 +30,7 @@ public class PostServiceImpl implements PostService {
     private final UserRepo userRepo;
     private final AddressRepository addressRepository;
 
-    @Override
+    @Override @Transactional
     public SimpleResponse save(PostRequest postRequest) {
 
         User currentUser = getCurrentUser();
@@ -45,13 +45,14 @@ public class PostServiceImpl implements PostService {
         Post post = new Post();
         post.setTitle(postRequest.getTitle());
         post.setDescription(postRequest.getDescription());
-        post.setImage(postRequest.getImage());
         post.setHometype(postRequest.getHometype());
         post.setPrice(postRequest.getPrice());
         post.setPersons(postRequest.getPersons());
+        post.setImages(postRequest.getImages()); // Установка изображений
 
         post.setAddress(savedAddress);
         post.setUsers(currentUser);
+
         postRepository.save(post);
 
         return SimpleResponse.builder()
@@ -62,9 +63,10 @@ public class PostServiceImpl implements PostService {
 
     @Override  @Transactional
     public SimpleResponse update(Long postId, PostRequest postRequest) {
+        getCurrentUser();
         Post post = postRepository.getByIds(postId);
         post.setTitle(postRequest.getTitle());
-        post.setImage(postRequest.getImage());
+        post.setImages(postRequest.getImages());
         post.setDescription(postRequest.getDescription());
         post.setHometype(postRequest.getHometype());
         post.setPersons(postRequest.getPersons());
@@ -89,6 +91,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PaginationPost> allPost(int page, int size) {
 
+        getCurrentUserClient();
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Post> posts = postRepository.getAllPage(pageable);
         List<PaginationPost> responseAlls = new ArrayList<>();
@@ -97,7 +100,7 @@ public class PostServiceImpl implements PostService {
                         .page(posts.getNumber() + 1)
                         .size(posts.getTotalPages())
                         .title(post.getTitle())
-                        .image(post.getImage())
+                        .images(post.getImages())
                         .price(post.getPrice())
                         .description(post.getDescription())
                         .persons(post.getPersons())
@@ -114,15 +117,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseOne findPost(Long postId) {
+        getCurrentUserClient();
         Post post = postRepository.findPostId(postId);
-        List<Comment> comments = post.getComments(); // Получаем список всех комментариев для данного поста
+        List<Comment> comments = post.getComments();
         List<CommentResponse> commentResponses = mapToCommentResponse(comments);
         return mapToPostResponse(post, commentResponses);
     }
     private PostResponseOne mapToPostResponse(Post post, List<CommentResponse> commentResponses) {
         return new PostResponseOne(
                 post.getTitle(),
-                post.getImage(),
+                post.getImages(),
                 post.getHometype(),
                 post.getPersons(),
                 post.getMark(),
@@ -156,44 +160,68 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponseAlls search(String word) {
-        return postRepository.search(word);
+    public List<PostResponseAlls> search(String word) {
+        getCurrentUserClient();
+       List<PostResponseAlls> search = postRepository.search(word);
+        for (PostResponseAlls postResponseAlls : search) {
+            postResponseAlls.setImages(postRepository.findImage(postResponseAlls.getId()));
+        }
+        return search;
     }
 
     @Override
     public List<PostResponseAlls> sort(Region region) {
-        return postRepository.sortReqion(region);
+        getCurrentUserClient();
+        List<PostResponseAlls> postResponseAlls = postRepository.sortReqion(region);
+        for (PostResponseAlls postResponseAll : postResponseAlls) {
+            postResponseAll.setImages(postRepository.findImage(postResponseAll.getId()));
+        }
+
+        return postResponseAlls;
     }
 
     @Override
     public List<PostResponseAlls> filter(HomeType homeType) {
-
+getCurrentUserClient();
         if (homeType.equals(HomeType.HOUSE) || homeType.equals(HomeType.APARTMENT)  || homeType.equals(HomeType.ALL))  {
-            return postRepository.filterHouseAndApartment(homeType);
+            List<PostResponseAlls> postResponseAlls = postRepository.filterHouseAndApartment(homeType);
+            for (PostResponseAlls postResponseAll : postResponseAlls) {
+                postResponseAll.setImages(postRepository.findImage(postResponseAll.getId()));
+            }
+            return postResponseAlls;
         }
-        return postRepository.getAll();
+        return null;
     }
 
     @Override
     public List<PostResponseAlls> priceFilter(String word) {
+        getCurrentUserClient();
         return postRepository.priceFilter(word);
     }
 
     @Override
     public List<PostVendorAll> vendorAll() {
         getCurrentUser();
-        return postRepository.vendorAllPost();
+        List<PostVendorAll> postVendorAlls = postRepository.vendorAllPost();
+        for (PostVendorAll postVendorAll : postVendorAlls) {
+            postVendorAll.setImages(postRepository.findImage(postVendorAll.getId()));
+        }
+        return postVendorAlls;
     }
 
     @Override
     public List<PostAnnouncementAll> announcementAll() {
         getCurrentUser();
-        return postRepository.announcement();
+        List<PostAnnouncementAll> announcement = postRepository.announcement();
+        for (PostAnnouncementAll postAnnouncementAll : announcement) {
+            postAnnouncementAll.setImages(postRepository.findImage(postAnnouncementAll.getId()));
+        }
+        return announcement;
     }
 
     @Override
     public FavoritePost favoritePost(Long postId) {
-
+        getCurrentUserClient();
         FavoritePost favoritePost = postRepository.favoriteVendor(postId);
 
         Post post = postRepository.getByIds(favoritePost.getId());
@@ -204,8 +232,15 @@ public class PostServiceImpl implements PostService {
 
         List<CommentResponse> commentResponses = new ArrayList<>();
         for (Comment comment : post.getComments()) {
-            commentResponses.add(new CommentResponse(comment.getId(), comment.getComment(),comment.getDate(),comment.getImages(),comment.getMark()));
+            List<String> commentImage = new ArrayList<>();
+            for (String image : comment.getImages()) {
+                commentImage.add(image);
+            }
+                commentResponses.add(new CommentResponse(comment.getId(), comment.getComment(),comment.getDate(),commentImage, comment.getMark()));
+                comment.setImages(comment.getImages());
         }
+
+
         favoritePost.setInFavorites(inFavoriteResponses);
         favoritePost.setComments(commentResponses);
         return favoritePost;
@@ -215,6 +250,14 @@ public class PostServiceImpl implements PostService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User current = userRepo.getByEmail(email);
         if (current.getRole().equals(Role.ADMIN)|| current.getRole().equals(Role.VENDOR))
+            return current;
+        else throw new AccessDeniedException("Forbidden 403");
+    }
+
+    private User getCurrentUserClient() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User current = userRepo.getByEmail(email);
+        if (current.getRole().equals(Role.ADMIN)|| current.getRole().equals(Role.VENDOR)||current.getRole().equals(Role.CLIENT))
             return current;
         else throw new AccessDeniedException("Forbidden 403");
     }

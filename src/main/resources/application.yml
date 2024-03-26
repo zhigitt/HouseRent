@@ -9,13 +9,13 @@ spring:
 
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: create
         show-sql: true
 
 server:
     error:
         include-stacktrace: always
-    port: 8088
+    port: 1212
 
 app:
     jwt:

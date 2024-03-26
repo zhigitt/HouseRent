@@ -5,13 +5,14 @@ import houserent.entity.Comment;
 import houserent.entity.RentInfo;
 import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Region;
+import jakarta.persistence.ElementCollection;
 
 import java.util.List;
 
 public record PostResponseOne(
 
         String title,
-        String image,
+        List<String> images,
         HomeType hometype,
         int persons,
         double mark,

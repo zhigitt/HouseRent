@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
+
 public class SecurityConfig {
 
     private final UserRepo userRepo;
@@ -30,7 +31,12 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request -> {
             request
-                    .requestMatchers("/api/auth/**")
+                    .requestMatchers(
+                            "/**",
+                            "/api/auth/**",
+                            "/swagger-ui/index.html/**"
+
+                    )
                     .permitAll()
                     .anyRequest()
                     .authenticated();

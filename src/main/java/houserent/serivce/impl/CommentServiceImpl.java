@@ -42,6 +42,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setMark(commentRequest.getMark());
         comment.setUser(user);
         comment.setPost(post);
+//        post.getComments().add(comment);
         commentRepository.save(comment);
 
         double rating = announcementRating(post.getComments());

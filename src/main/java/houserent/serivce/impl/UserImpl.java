@@ -165,16 +165,20 @@ public class UserImpl implements UserService {
 
         int daysBooking = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
 
-        if (post.isBook() == false){
+        if (!post.isBook()){
             BigDecimal currentUserCard = currentUser.getCard();
             BigDecimal postPrice = post.getPrice();
 
             if (currentUserCard.compareTo(postPrice) >= 0){
                 BigDecimal total = postPrice.multiply(BigDecimal.valueOf(daysBooking));
 
-                currentUserCard = currentUserCard.subtract(total);
+                currentUserCard = currentUserCard.add(total);
+                currentUser.setCard(currentUserCard);
 
-                vendor.setCard(total);
+                BigDecimal vendorCard = vendor.getCard().subtract(total);
+                vendor.setCard(vendorCard);
+
+
                 post.setBook(true);
 
                 rentInfo.setUser(currentUser);

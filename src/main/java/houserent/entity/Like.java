@@ -3,7 +3,6 @@ package houserent.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.List;

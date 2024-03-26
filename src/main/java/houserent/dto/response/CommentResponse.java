@@ -15,22 +15,12 @@ public class CommentResponse {
     private String comment;
     private ZonedDateTime date;
     private List<String> images;
-    private int mark;
+    private double mark;
 
-    public CommentResponse(Long id, String comment, ZonedDateTime date, int mark) {
+    public CommentResponse(Long id, String comment, ZonedDateTime date, double mark) {
         this.id = id;
         this.comment = comment;
         this.date = date;
         this.mark = mark;
-    }
-
-public record CommentResponse(
-
-        Long id,
-        String comment,
-        ZonedDateTime date,
-        String image,
-        double mark) {
-    public CommentResponse(String name, Long id, String comment, ZonedDateTime date, List<String> images, int mark) {
     }
 }

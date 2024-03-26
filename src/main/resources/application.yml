@@ -3,9 +3,9 @@ spring:
         name: HouseRent
     datasource:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/houserent
+        url: jdbc:postgresql://localhost:5432/airbnb
         username: postgres
-        password: zhigit
+        password: 1234
 
     jpa:
         hibernate:
@@ -15,7 +15,7 @@ spring:
 server:
     error:
         include-stacktrace: always
-    port: 8089
+    port: 8088
 
 app:
     jwt:

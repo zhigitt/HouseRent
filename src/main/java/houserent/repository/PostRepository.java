@@ -78,7 +78,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     FavoritePost favoriteVendor(Long postId);
 
     @Query("select p from Post p where p.id=:postId")
-    PostResponseOne findPostId(Long postId);
+    Post findPostId(Long postId);
 
 
 //    @Query("SELECT new java12.dto.response.MenuSearchResponse(s, m.name, m.price, m.description, m.isVegetarian) FROM MenuItem m JOIN m.subcategories s ORDER BY CASE WHEN :word = 'asc' THEN m.price END ASC, CASE WHEN :word = 'desc' THEN m.price END DESC")

@@ -1,16 +1,8 @@
 package houserent.serivce.impl;
 
 import houserent.dto.request.PostRequest;
-import houserent.dto.response.PaginationPost;
-import houserent.dto.response.PostResponseAlls;
-import houserent.dto.response.PostResponseOne;
 import houserent.dto.response.*;
 import houserent.entity.*;
-
-import houserent.dto.response.*;
-import houserent.entity.Address;
-import houserent.entity.Post;
-import houserent.entity.User;
 import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Region;
 import houserent.entity.enums.Role;
@@ -28,11 +20,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Service
 @RequiredArgsConstructor
@@ -125,7 +114,45 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseOne findPost(Long postId) {
-        return postRepository.findPostId(postId);
+        Post post = postRepository.findPostId(postId);
+        List<Comment> comments = post.getComments(); // Получаем список всех комментариев для данного поста
+        List<CommentResponse> commentResponses = mapToCommentResponse(comments);
+        return mapToPostResponse(post, commentResponses);
+    }
+    private PostResponseOne mapToPostResponse(Post post, List<CommentResponse> commentResponses) {
+        return new PostResponseOne(
+                post.getTitle(),
+                post.getImage(),
+                post.getHometype(),
+                post.getPersons(),
+                post.getMark(),
+                post.getAddress().getCity(),
+                post.getAddress().getRegion(),
+                post.getAddress().getStreet(),
+                post.getDescription(),
+                post.getUsers().getName(),
+                post.getUsers().getEmail(),
+                post.getUsers().getRentInfo(),
+                post.isFavorite(),
+                post.isBook(),
+                commentResponses
+        );
+    }
+
+    private List<CommentResponse> mapToCommentResponse(List<Comment> comments) {
+        List<CommentResponse> commentResponses = new ArrayList<>();
+        for (Comment comment : comments) {
+            // Создаем объект CommentResponse и заполняем его данными из Comment
+            CommentResponse commentResponse = new CommentResponse(
+                    comment.getId(),
+                    comment.getComment(),
+                    comment.getDate(),
+                    comment.getImages(),
+                    comment.getMark()
+            );
+            commentResponses.add(commentResponse);
+        }
+        return commentResponses;
     }
 
     @Override
@@ -177,8 +204,7 @@ public class PostServiceImpl implements PostService {
 
         List<CommentResponse> commentResponses = new ArrayList<>();
         for (Comment comment : post.getComments()) {
-            commentResponses.add(new CommentResponse(comment.getId(), comment.getComment(),comment.getDate(),comment.getImage(),comment.getMark()));
-            commentResponses.add(new CommentResponse(comment.getUser().getName(),comment.getId(), comment.getComment(),comment.getDate(),comment.getImages(),comment.getMark()));
+            commentResponses.add(new CommentResponse(comment.getId(), comment.getComment(),comment.getDate(),comment.getImages(),comment.getMark()));
         }
         favoritePost.setInFavorites(inFavoriteResponses);
         favoritePost.setComments(commentResponses);

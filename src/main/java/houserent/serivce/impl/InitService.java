@@ -17,8 +17,8 @@ public class InitService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
 
-//    @PostConstruct @Transactional
-    public void saveAdmin(){
+    @PostConstruct @Transactional
+    void saveAdmin(){
         User admin = new User(
                 "Admin",
                 "admin@gmail.com",

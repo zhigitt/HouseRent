@@ -70,6 +70,8 @@ public class PostAPI {
         return postService.announcementAll();
     }
 
+
+
     @GetMapping("/favorite/{postId}")
     public FavoritePost favoritePost (@PathVariable Long postId){
         return postService.favoritePost(postId);

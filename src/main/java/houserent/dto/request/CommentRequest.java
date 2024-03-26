@@ -13,8 +13,6 @@ import java.util.List;
 public class CommentRequest {
     private String comment;
     private ZonedDateTime date;
-    private String image;
     private double mark;
-    private List<String> image;
-    private int mark;
+    private List<String> images;
 }

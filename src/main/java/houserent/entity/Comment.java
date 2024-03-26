@@ -21,11 +21,9 @@ public class Comment {
     private Long id;
     private String comment;
     private ZonedDateTime date;
-    private String image;
     private double mark;
     @ElementCollection
     private List<String> images;
-    private int mark;
 
     @ManyToOne
     private Post post;

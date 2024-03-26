@@ -14,12 +14,10 @@ import houserent.repository.UserRepo;
 import houserent.serivce.CommentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,7 +29,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override @Transactional
     public SimpleResponse save(Long postId,CommentRequest commentRequest) {
-    public SimpleResponse save(Long postId, CommentRequest commentRequest) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepo.getByEmail(email);
 
@@ -39,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = new Comment();
         comment.setComment(commentRequest.getComment());
 
-        comment.setImages(commentRequest.getImage());
+        comment.setImages(commentRequest.getImages());
         comment.setMark(commentRequest.getMark());
         comment.setUser(user);
         comment.setPost(post);
@@ -138,7 +135,7 @@ public class CommentServiceImpl implements CommentService {
         for (Comment commentt : post.getComments()) {
             if (commentt.getUser().getId().equals(user.getId())) {
                 comment.setComment(commentRequest.getComment());
-                comment.setImages(commentRequest.getImage());
+                comment.setImages(commentRequest.getImages());
                 comment.setMark(commentRequest.getMark());
                 comment.setUser(user);
                 commentRepository.save(comment);
@@ -150,7 +147,4 @@ public class CommentServiceImpl implements CommentService {
                 .message("Successfully updated! ")
                 .build();
     }
-
-
-
 }

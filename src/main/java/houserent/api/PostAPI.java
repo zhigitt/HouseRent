@@ -69,19 +69,18 @@ public class PostAPI {
         return postService.priceFilter(word);
     }
 
-    @Secured({"VENDOR","ADMIN"})
-
+//    @Secured({"VENDOR","ADMIN"})
     @GetMapping("/vendor")
     public List<PostVendorAll> vendorProfile(){
         return postService.vendorAll();
     }
 
-    @Secured({"VENDOR","ADMIN"})
+//    @Secured({"VENDOR","ADMIN"})
     @GetMapping("/announcement")
     public List<PostAnnouncementAll> vendorAnnouncement(){
         return postService.announcementAll();
     }
-    @Secured({"VENDOR","ADMIN"})
+//    @Secured({"VENDOR","ADMIN"})
     @GetMapping("/favorite/{postId}")
     public FavoritePost favoritePost (@PathVariable Long postId){
         return postService.favoritePost(postId);

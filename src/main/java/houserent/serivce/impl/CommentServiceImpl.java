@@ -134,16 +134,14 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepo.getByEmail(email);
 
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new NotFoundException("With this id not found!"));
-        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("With this id not found!"));
-
-        for (Comment commentt : post.getComments()) {
-            if (commentt.getUser().getId().equals(user.getId())) {
-                comment.setComment(commentRequest.getComment());
-                comment.setImages(commentRequest.getImages());
-                comment.setMark(commentRequest.getMark());
-                comment.setUser(user);
-                commentRepository.save(comment);
-            }
+//        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("With this id not found!"));
+        if(comment.getUser().getId().equals(user.getId())){
+            comment.setComment(commentRequest.getComment());
+            comment.setMark(commentRequest.getMark());
+            comment.setImages(commentRequest.getImages());
+            commentRepository.save(comment);
+        }else {
+            System.out.println("You can't update this comment!");
         }
 
         return SimpleResponse.builder()

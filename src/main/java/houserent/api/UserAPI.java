@@ -25,20 +25,20 @@ public class UserAPI {
     }
 
     @Secured({"CLIENT", "VENDOR"})
-    @PostMapping("/addFavorite/{postId}")
+    @PostMapping("/addFavorite/{postId}")     //ne poniatno kak rabitaet
     SimpleResponse addPost(@PathVariable Long postId ){
         return userService.addFavoritePost(postId);
     }
 
     @Secured({"CLIENT", "VENDOR"})
-    @GetMapping("/getAllFavorites")
+    @GetMapping("/getAllFavorites")          //ne poniatno
     List<FavoritePostsResponse> getAll(){
         return userService.getAllFavoritePosts();
     }
 
     @Secured("CLIENT")
     @PostMapping("/toBook/{postId}")
-    SimpleResponse toBook(@PathVariable Long postId,
+    SimpleResponse toBook(@PathVariable Long postId,               //????
                           @RequestBody RentInfoRequest rentInfoRequest){
         return userService.toBook(postId, rentInfoRequest);
     }

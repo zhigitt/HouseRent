@@ -1,7 +1,6 @@
 package houserent.repository;
 
-import houserent.dto.response.SimpleResponse;
-import houserent.dto.request.SignUpRequest;
+
 import houserent.entity.User;
 import houserent.exception.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;

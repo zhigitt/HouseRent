@@ -63,7 +63,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p")
     Page<Post> getAllPage(Pageable pageable);
 
-    @Query("select new houserent.dto.response.PostVendorAll(p.id,u.name,u.email,p.title,p.price, p.description, p.persons, MAX(c.mark), a.city, a.region, a.street,r.chekin,r.chekOut) from Post p join p.address a left join p.comments c join p.users u join u.rentInfos r group by u.name,u.email,p.title, p.images,p.price, p.description, p.persons, a.city, a.region, a.street,r.chekin,r.chekOut")
+    @Query("select new houserent.dto.response.PostVendorAll(p.id,u.name,u.email,p.title,p.price, p.description, p.persons, MAX(c.mark), a.city, a.region, a.street,r.chekin,r.chekOut) " +
+            "from Post p join p.address a left join p.comments c join p.users u join u.rentInfos r group by u.name,u.email,p.title, p.images,p.price, p.description, p.persons, a.city, a.region, a.street,r.chekin,r.chekOut")
     List<PostVendorAll> vendorAllPost();
 
     @Query("select new houserent.dto.response.PostAnnouncementAll(p.id,u.name,u.email,p.title,p.price, p.description, p.persons, MAX(c.mark), a.city, a.region, a.street) from Post p join p.address a left join p.comments c join p.users u group by u.name,u.email,p.title, p.images,p.price, p.description, p.persons, a.city, a.region, a.street")

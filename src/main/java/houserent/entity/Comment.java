@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -22,12 +23,15 @@ public class Comment {
     private ZonedDateTime date;
     private String image;
     private double mark;
+    @ElementCollection
+    private List<String> images;
+    private int mark;
 
     @ManyToOne
     private Post post;
 
-    @OneToMany(mappedBy = "comment")
-    private List<Like> likes;
+    @OneToOne(mappedBy = "comment")
+    private Like like;
 
     @ManyToOne
     private User user;
@@ -36,5 +40,10 @@ public class Comment {
         this.id = id;
         this.comment = comment;
         this.date = date;
+    }
+
+    @PrePersist
+    private void prepersist(){
+        this.date = ZonedDateTime.now();
     }
 }

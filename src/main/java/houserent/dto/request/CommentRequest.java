@@ -3,6 +3,7 @@ package houserent.dto.request;
 import lombok.*;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,4 +15,6 @@ public class CommentRequest {
     private ZonedDateTime date;
     private String image;
     private double mark;
+    private List<String> image;
+    private int mark;
 }

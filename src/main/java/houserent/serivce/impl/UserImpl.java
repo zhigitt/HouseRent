@@ -197,7 +197,7 @@ public class UserImpl implements UserService {
                 return SimpleResponse
                         .builder()
                         .httpStatus(HttpStatus.OK)
-                        .message("Catatochkada akcha jetishsiz!")
+                        .message("Caratochkada akcha jetishsiz!")
                         .build();
             }
 

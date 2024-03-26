@@ -33,11 +33,11 @@ public class Post {
 
     @ManyToOne
     private User users;
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private List<Comment> comments;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private Address address;
-    @ManyToMany(mappedBy = "posts")
+    @ManyToMany(mappedBy = "posts",cascade = {CascadeType.PERSIST})
     private List<InFavorite> inFavorites;
 
 }

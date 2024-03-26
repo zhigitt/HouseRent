@@ -24,13 +24,13 @@ public class Comment {
     @ElementCollection
     private List<String> images;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH})
     private Post post;
 
-    @OneToOne(mappedBy = "comment")
+    @OneToOne(mappedBy = "comment",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private Like like;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH})
     private User user;
 
     public Comment(Long id, String comment, ZonedDateTime date) {

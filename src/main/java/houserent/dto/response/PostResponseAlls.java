@@ -20,7 +20,7 @@ public class PostResponseAlls
     private BigDecimal price;
     private String description;
     private Integer persons;
-    private Integer mark;
+    private double mark;
     private String city;
     private Region region;
     private String street;

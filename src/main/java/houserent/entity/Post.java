@@ -22,6 +22,7 @@ public class Post {
     private String title;
     private String description;
     private String image;
+    private double mark;
     @Enumerated(EnumType.STRING)
     private HomeType hometype;
     private BigDecimal price;

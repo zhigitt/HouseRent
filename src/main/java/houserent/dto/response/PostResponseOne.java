@@ -14,6 +14,7 @@ public record PostResponseOne(
         String image,
         HomeType hometype,
         int persons,
+        double mark,
         String city,
         Region region,
         String street,
@@ -23,7 +24,7 @@ public record PostResponseOne(
         RentInfo rentInfo,
         boolean favorite,
         boolean book,
-        Comment comment
+        List<CommentResponse> comment
 
 ) {
 }

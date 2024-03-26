@@ -29,8 +29,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "FROM Post p LEFT JOIN p.comments c JOIN p.address a")
     List<PostResponseAlls> getAll();
 
-    @Query("select new houserent.dto.response.PostResponseOne(p.title, p.image, p.hometype, p.persons, a.city,a.region,a.street, p.description, u.name, u.email, r, p.favorite, p.book, c) from Post p join p.address a left join p.comments c  join p.users u left join u.rentInfo r where p.id =:postId")
-    PostResponseOne findPostId(Long postId);
+//    @Query("select new houserent.dto.response.PostResponseOne(p.title, p.image, p.hometype, p.persons, a.city, a.region, a.street, p.description, u.name, u.email, r, p.favorite, p.book) from Post p join p.address a left join p.comments c left join p.users u left join u.rentInfo r where p.id = :postId")
+//    PostResponseOne findPostId(Long postId);
 
 
     @Query("SELECT new houserent.dto.response.PostResponseAlls(p.title,p.image,p.price, p.description, p.persons, c.mark, a.city, a.region, a.street, p.favorite, p.book) " +
@@ -53,20 +53,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p")
     Page<Post> getAllPage(Pageable pageable);
 
-
-    //    private String name;
-//    private String email;
-//    private String title;
-//    private String image;
-//    private BigDecimal price;
-//    private String description;
-//    private Integer persons;
-//    private Integer mark;
-//    private String city;
-//    private Region region;
-//    private String street;
-//    private LocalDate chekin;
-//    private LocalDate chekOut;
     @Query("select new houserent.dto.response.PostVendorAll(u.name,u.email,p.title, p.image,p.price, p.description, p.persons, c.mark, a.city, a.region, a.street,r.chekin,r.chekOut) from Post p join p.address a left join p.comments c join p.users u join u.rentInfos r")
     List<PostVendorAll> vendorAllPost();
 
@@ -90,6 +76,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
         //            p.inFavorites,
 //    @Query("select new houserent.dto.response.FavoritePost(p.title, p.image, p.hometype, p.persons, a.city, a.region, a.street, p.description, p.inFavorites, p.comments) from Post p join p.address a")
     FavoritePost favoriteVendor(Long postId);
+
+    @Query("select p from Post p where p.id=:postId")
+    PostResponseOne findPostId(Long postId);
 
 
 //    @Query("SELECT new java12.dto.response.MenuSearchResponse(s, m.name, m.price, m.description, m.isVegetarian) FROM MenuItem m JOIN m.subcategories s ORDER BY CASE WHEN :word = 'asc' THEN m.price END ASC, CASE WHEN :word = 'desc' THEN m.price END DESC")

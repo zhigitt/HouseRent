@@ -1,10 +1,7 @@
 package houserent.serivce;
 
-import houserent.dto.request.RentInfoRequest;
+import houserent.dto.request.*;
 import houserent.dto.response.*;
-import houserent.dto.request.ReplenishRequest;
-import houserent.dto.request.SignInRequest;
-import houserent.dto.request.SignUpRequest;
 
 import java.util.List;
 
@@ -20,4 +17,10 @@ public interface UserService {
     List<FavoritePostsResponse> getAllFavoritePosts();
 
     SimpleResponse toBook(Long postId, RentInfoRequest rentInfoRequest);
+
+    SimpleResponse update(UpdateRequest updateRequest);
+
+    List<UserResponse> getAllUsers();
+
+    SimpleResponse delete(Long userId);
 }

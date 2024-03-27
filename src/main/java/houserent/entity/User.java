@@ -36,13 +36,13 @@ public class User implements UserDetails {
     @ManyToMany
     private List<Post> favoriteBasket;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Post> booking;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<RentInfo> rentInfos;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private RentInfo rentInfo;
 
     public User(String name, String email, BigDecimal card, String password, String phoneNumber, Role role) {

@@ -1,11 +1,8 @@
 package houserent.serivce.impl;
 
 import houserent.config.jwt.JwtService;
-import houserent.dto.request.RentInfoRequest;
+import houserent.dto.request.*;
 import houserent.dto.response.*;
-import houserent.dto.request.ReplenishRequest;
-import houserent.dto.request.SignInRequest;
-import houserent.dto.request.SignUpRequest;
 import houserent.entity.Post;
 import houserent.entity.RentInfo;
 import houserent.entity.User;
@@ -212,6 +209,68 @@ public class UserImpl implements UserService {
                     .message(post.getTitle() + " bosh emes brondolgon!")
                     .build();
 
+        }
+    }
+
+    @Override
+    @Transactional
+    public SimpleResponse update(UpdateRequest updateRequest) {
+        User user = getCurrentUser();
+
+        user.setName(updateRequest.getName());
+        user.setPassword(updateRequest.getPassword());
+        user.setPhoneNumber(updateRequest.getPhoneNumber());
+
+        return SimpleResponse
+                .builder()
+                .httpStatus(HttpStatus.OK)
+                .message(user.getUsername() + " updated!")
+                .build();
+    }
+
+    @Override
+    public List<UserResponse> getAllUsers() {
+        List<UserResponse> userResponses = new ArrayList<>();
+        List<User> all = userRepo.findAll();
+
+        for (User user : all) {
+            if (!user.getRole().equals(Role.ADMIN)) {
+                userResponses.add(new UserResponse(
+                        user.getId(),
+                        user.getName(),
+                        user.getRole(),
+                        user.getEmail()
+                ));
+            }
+        }
+        return userResponses;
+    }
+
+    @Override
+    @Transactional
+    public SimpleResponse delete(Long userId) {
+        User user = userRepo.findById(userId).orElseThrow(() ->
+                new NotFoundException("Myndai IDde user jok!"));
+
+        if (!user.getRole().equals(Role.ADMIN)){
+            userRepo.delete(user);
+            userRepo.deleteComment(userId);
+            userRepo.deletePost(userId);
+            userRepo.deleteRentInfo(userId);
+
+
+            userRepo.delete(user);
+            return SimpleResponse
+                    .builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Deleted  " + user.getName())
+                    .build();
+        }else {
+            return SimpleResponse
+                    .builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Admin admindi ochuro albait")
+                    .build();
         }
     }
 

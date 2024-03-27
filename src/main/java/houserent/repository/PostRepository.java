@@ -1,9 +1,6 @@
 package houserent.repository;
 
 import houserent.dto.response.*;
-import houserent.entity.Address;
-import houserent.entity.Comment;
-import houserent.entity.InFavorite;
 import houserent.entity.Post;
 import houserent.entity.enums.HomeType;
 import houserent.entity.enums.Region;

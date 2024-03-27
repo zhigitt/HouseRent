@@ -41,5 +41,6 @@ public class PostVendorAll {
     }
 
     private List<String> images;
+    private List<CommentResponse> comments;
 
 }

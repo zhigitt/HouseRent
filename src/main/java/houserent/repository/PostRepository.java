@@ -70,8 +70,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "join p.address a " +
             "left join p.comments c " +
             "join p.users u " +
-            " left join u.rentInfos r group by p.id, u.name, u.email, p.title, p.price, p.description, p.persons,a.city, a.region, a.street, r.chekin, r.chekOut ")
-    List<PostVendorAll> vendorAllPost();
+            " left join u.rentInfos r where p.id =:postId group by p.id, u.name, u.email, p.title, p.price, p.description, p.persons,a.city, a.region, a.street, r.chekin, r.chekOut ")
+    PostVendorAll vendorAllPost(Long postId);
 
 
 

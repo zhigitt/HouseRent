@@ -150,7 +150,6 @@ public class PostServiceImpl implements PostService {
     private List<CommentResponse> mapToCommentResponse(List<Comment> comments) {
         List<CommentResponse> commentResponses = new ArrayList<>();
         for (Comment comment : comments) {
-            // Создаем объект CommentResponse и заполняем его данными из Comment
             CommentResponse commentResponse = new CommentResponse(
                     comment.getId(),
                     comment.getComment(),

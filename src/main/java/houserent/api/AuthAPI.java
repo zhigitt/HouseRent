@@ -20,7 +20,7 @@ public class AuthAPI {
         return userService.register(signUpRequest);
     }
 
-    @GetMapping("/signIn")
+    @PostMapping("/signIn")
     LoginResponse sigIn(@RequestBody @Valid SignInRequest signInRequest){
         return userService.login(signInRequest);
     }

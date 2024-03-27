@@ -230,16 +230,17 @@ public class UserImpl implements UserService {
 
     @Override
     public List<UserResponse> getAllUsers() {
+       getCurrentUsers();
         List<UserResponse> userResponses = new ArrayList<>();
         List<User> all = userRepo.findAll();
 
-        for (User user : all) {
-            if (!user.getRole().equals(Role.ADMIN)) {
+        for (User user1 : all) {
+            if (!user1.getRole().equals(Role.ADMIN)) {
                 userResponses.add(new UserResponse(
-                        user.getId(),
-                        user.getName(),
-                        user.getRole(),
-                        user.getEmail()
+                        user1.getId(),
+                        user1.getName(),
+                        user1.getRole(),
+                        user1.getEmail()
                 ));
             }
         }
@@ -249,6 +250,7 @@ public class UserImpl implements UserService {
     @Override
     @Transactional
     public SimpleResponse delete(Long userId) {
+        getCurrentUsers();
         User user = userRepo.findById(userId).orElseThrow(() ->
                 new NotFoundException("Myndai IDde user jok!"));
 
@@ -278,6 +280,14 @@ public class UserImpl implements UserService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User current = userRepo.getByEmail(email);
         if (current.getRole().equals(Role.VENDOR) || current.getRole().equals(Role.CLIENT))
+            return current;
+        else throw new ForbiddenException("Forbidden 403");
+    }
+
+    private User getCurrentUsers() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User current = userRepo.getByEmail(email);
+        if (current.getRole().equals(Role.ADMIN))
             return current;
         else throw new ForbiddenException("Forbidden 403");
     }

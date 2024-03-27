@@ -17,14 +17,14 @@ public class PostVendorAll {
     private BigDecimal price;
     private String description;
     private Integer persons;
-    private double mark;
+    private Double mark;
     private String city;
     private Region region;
     private String street;
     private LocalDate chekin;
     private LocalDate chekOut;
 
-    public PostVendorAll(Long id, String name, String email, String title, BigDecimal price, String description, Integer persons, double mark, String city, Region region, String street, LocalDate chekin, LocalDate chekOut) {
+    public PostVendorAll(Long id, String name, String email, String title, BigDecimal price, String description, Integer persons, Double mark, String city, Region region, String street, LocalDate chekin, LocalDate chekOut) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -32,7 +32,7 @@ public class PostVendorAll {
         this.price = price;
         this.description = description;
         this.persons = persons;
-        this.mark = mark;
+        this.mark =  mark != null ? mark : 0.0;
         this.city = city;
         this.region = region;
         this.street = street;
@@ -41,5 +41,6 @@ public class PostVendorAll {
     }
 
     private List<String> images;
+    private List<CommentResponse> comments;
 
 }

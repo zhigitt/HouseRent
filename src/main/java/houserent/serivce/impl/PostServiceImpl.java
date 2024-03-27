@@ -204,13 +204,23 @@ getCurrentUserClient();
     }
 
     @Override
-    public List<PostVendorAll> vendorAll() {
-        getCurrentUser();
-        List<PostVendorAll> postVendorAlls = postRepository.vendorAllPost();
-        for (PostVendorAll postVendorAll : postVendorAlls) {
+    public PostVendorAll vendorAll(Long postId) {
+        User currentUser = getCurrentUser();
+        PostVendorAll postVendorAll = postRepository.vendorAllPost(postId);
+        Post post = postRepository.getByIds(postId);
             postVendorAll.setImages(postRepository.findImage(postVendorAll.getId()));
+
+        List<CommentResponse>commentResponses = new ArrayList<>();
+        for (Comment comment : post.getComments()) {
+            List<String> images1 = new ArrayList<>();
+            for (String s : images1) {
+                images1.add(s);
+            }
+            commentResponses.add(new CommentResponse(comment.getId(), comment.getComment(),comment.getDate(),images1, comment.getMark()));
+//            comment.setImages(comment.getImages());
         }
-        return postVendorAlls;
+        postVendorAll.setComments(commentResponses);
+        return postVendorAll;
     }
 
     @Override

@@ -26,7 +26,7 @@ public interface PostService {
 
     List<PostResponseAlls> priceFilter(String word);
 
-    List<PostVendorAll> vendorAll();
+    PostVendorAll vendorAll(Long postId);
 
     List<PostAnnouncementAll> announcementAll();
 
